@@ -141,9 +141,9 @@ function createHypercube() {
         // Cubo exterior (w = -0.8)
         [-1,-1,-1,-w], [1,-1,-1,-w], [1,1,-1,-w], [-1,1,-1,-w],
         [-1,-1,1,-w], [1,-1,1,-w], [1,1,1,-w], [-1,1,1,-w],
-        // Cubo interior (w = 0.8) - escalado más pequeño
-        [-0.4,-0.4,-0.4,w], [0.4,-0.4,-0.4,w], [0.4,0.4,-0.4,w], [-0.4,0.4,-0.4,w],
-        [-0.4,-0.4,0.4,w], [0.4,-0.4,0.4,w], [0.4,0.4,0.4,w], [-0.4,0.4,0.4,w]
+        // Cubo interior (w = 0.8) - escalado para ser más visible
+        [-0.5,-0.5,-0.5,w], [0.5,-0.5,-0.5,w], [0.5,0.5,-0.5,w], [-0.5,0.5,-0.5,w],
+        [-0.5,-0.5,0.5,w], [0.5,-0.5,0.5,w], [0.5,0.5,0.5,w], [-0.5,0.5,0.5,w]
     ];
     
     // Proyección estereográfica de 4D a 3D
@@ -152,17 +152,6 @@ function createHypercube() {
         const scale = distance / (distance - v[3]);
         return new THREE.Vector3(v[0] * scale * 1.3, v[1] * scale * 1.3, v[2] * scale * 1.3);
     });
-    
-    // Crear cubo interno (Tártaro) - índices 8-15
-    const innerVertices = projected.slice(8, 16);
-    innerCube = createCubeFromVertices(innerVertices, zones.tartaro, true);
-    innerCube.userData = { isTartaro: true };
-    hypercube.add(innerCube);
-    
-    // Crear cubo externo transparente - índices 0-7
-    const outerVertices = projected.slice(0, 8);
-    outerCube = createCubeWireframe(outerVertices);
-    hypercube.add(outerCube);
     
     // Crear caras trapezoidales (conectan cubo interno con externo)
     const trapezoidFaces = [
@@ -191,6 +180,14 @@ function createHypercube() {
         trapezoidMeshes.push(trapezoid);
         hypercube.add(trapezoid);
     });
+    
+    // Crear cubo interno (Tártaro) - índices 8-15
+    // LO AGREGAMOS AL FINAL PARA QUE SE RENDERICE ENCIMA
+    const innerVertices = projected.slice(8, 16);
+    innerCube = createCubeFromVertices(innerVertices, zones.tartaro, true);
+    innerCube.userData = { isTartaro: true };
+    innerCube.renderOrder = 1; // Renderizar después de los trapecios
+    hypercube.add(innerCube);
     
     scene.add(hypercube);
 }
@@ -398,19 +395,27 @@ function onMouseMove(event) {
         innerCube.material.opacity = 0.4;
     }
     
-    const intersects = raycaster.intersectObjects([innerCube, ...trapezoidMeshes], false);
+    // Primero verificar si estamos sobre el cubo interno (más prioritario)
+    const innerIntersects = raycaster.intersectObject(innerCube, false);
     
-    if (intersects.length > 0) {
-        const object = intersects[0].object;
+    if (innerIntersects.length > 0) {
+        isOverCenter = true;
+        innerCube.material.emissiveIntensity = 1.2;
+        innerCube.material.opacity = 0.8;
+        renderer.domElement.style.cursor = 'pointer';
+        showMessage('Presiona G para acceder al Tártaro');
+        hoveredFace = null;
+        return; // Salir aquí para priorizar el cubo interno
+    }
+    
+    // Si no estamos sobre el cubo interno, verificar trapecios
+    isOverCenter = false;
+    const trapIntersects = raycaster.intersectObjects(trapezoidMeshes, false);
+    
+    if (trapIntersects.length > 0) {
+        const object = trapIntersects[0].object;
         
-        if (object.userData.isTartaro) {
-            isOverCenter = true;
-            innerCube.material.emissiveIntensity = 1.2;
-            innerCube.material.opacity = 0.8;
-            renderer.domElement.style.cursor = 'pointer';
-            showMessage('Presiona G para acceder al Tártaro');
-        } else if (object.userData.isTrapezoid) {
-            isOverCenter = false;
+        if (object.userData.isTrapezoid) {
             hoveredFace = object;
             object.material.opacity = 0.7;
             object.material.emissiveIntensity = 0.8;
@@ -420,7 +425,6 @@ function onMouseMove(event) {
             showMessage(`${zone.name} - ${zone.desc}`);
         }
     } else {
-        isOverCenter = false;
         hoveredFace = null;
         renderer.domElement.style.cursor = 'grab';
         hideMessage();
