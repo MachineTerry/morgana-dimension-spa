@@ -1,6 +1,6 @@
 // Importar Three.js y OrbitControls
 import * as THREE from 'three';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/controls/OrbitControls.js  ';
 
 let scene, camera, renderer, hypercube, controls;
 let raycaster, mouse;
@@ -10,6 +10,7 @@ let isOverCenter = false;
 let trapezoidMeshes = [];
 let longPressTimer = null;
 let longPressStarted = false;
+let selectedZonePanelVisible = false; // 👈 NUEVA VARIABLE PARA CONTROLAR EL PANEL
 
 // Configuración de zonas con colores específicos
 const zones = {
@@ -384,7 +385,11 @@ function onMouseMove(event) {
     } else {
         hoveredFace = null;
         renderer.domElement.style.cursor = 'grab';
-        hideRoomPanel(); // 👈 Asegurar que el panel de zonas se cierre al salir
+        
+        // 👇 Solo cerrar el panel si NO está visible (porque el usuario no hizo click)
+        if (!selectedZonePanelVisible) {
+            hideRoomPanel();
+        }
     }
 }
 
@@ -433,8 +438,14 @@ function onHypercubeClick(event) {
             }
         }
     } else {
+        // 👇 DESKTOP CLICK: SOLO SELECCIONAR, NO REDIRIGIR
         if (hoveredFace && hoveredFace.userData.isTrapezoid) {
-            window.loadZone(hoveredFace.userData.zoneIndex);
+            const zone = zones[hoveredFace.userData.zoneIndex];
+            showRoomPanel(zone, hoveredFace.userData.zoneIndex);
+            
+            // Asegurar que el hover visual esté activo
+            hoveredFace.material.opacity = 0.6;
+            hoveredFace.material.emissiveIntensity = 0.7;
         }
     }
 }
@@ -515,13 +526,15 @@ function showRoomPanel(zone, zoneIndex) {
             <button id="close-room-panel" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: #BFC7C9; font-size: 20px; cursor: pointer; padding: 5px;">✕</button>
             <h3>📍 Zona Seleccionada</h3>
             <p id="room-name"></p>
-            <button id="view-room-btn" class="view-room-btn">→ Explorar esta zona</button>
+            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona <strong>Enter</strong> o haz clic en el botón para entrar</p>
+            <button id="view-room-btn" class="view-room-btn">→ Explora Zona</button> <!-- 👈 Más corto -->
         `;
         document.getElementById('cube-view').appendChild(panel);
         
         document.getElementById('close-room-panel').addEventListener('click', (e) => {
             e.stopPropagation();
             hideRoomPanel();
+            selectedZonePanelVisible = false; // 👈 Marcar como cerrado
             if (hoveredFace) {
                 hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
                 hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
@@ -536,6 +549,7 @@ function showRoomPanel(zone, zoneIndex) {
     if (nameEl && btn) {
         nameEl.textContent = `${zone.name} — ${zone.desc}`;
         panel.style.display = 'block';
+        selectedZonePanelVisible = true; // 👈 Marcar como visible
         
         const newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
@@ -550,6 +564,7 @@ function hideRoomPanel() {
     const panel = document.getElementById('selected-room-panel');
     if (panel) {
         panel.style.display = 'none';
+        selectedZonePanelVisible = false; // 👈 Resetear
     }
 }
 
