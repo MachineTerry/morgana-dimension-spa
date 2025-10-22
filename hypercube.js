@@ -185,7 +185,7 @@ function createHypercube() {
         trapezoid.userData = { 
             zoneIndex: face.zone,
             isTrapezoid: true,
-            originalOpacity: 0.25,
+            originalOpacity: 0.3,
             originalEmissive: 0.2
         };
         trapezoidMeshes.push(trapezoid);
@@ -198,38 +198,59 @@ function createHypercube() {
 function createTrapezoid(o1, o2, o3, o4, i1, i2, i3, i4, zone) {
     const geometry = new THREE.BufferGeometry();
     
-    // Crear dos triángulos para cada lado del trapecio
+    // Crear geometría completa del trapecio usando todos los vértices
     const positions = new Float32Array([
-        // Primer triángulo
+        // Cara exterior (cuadrilátero del cubo externo)
         o1.x, o1.y, o1.z,
         o2.x, o2.y, o2.z,
-        i1.x, i1.y, i1.z,
-        // Segundo triángulo
-        o2.x, o2.y, o2.z,
-        i2.x, i2.y, i2.z,
-        i1.x, i1.y, i1.z,
-        // Tercer triángulo
-        o2.x, o2.y, o2.z,
         o3.x, o3.y, o3.z,
-        i2.x, i2.y, i2.z,
-        // Cuarto triángulo
-        o3.x, o3.y, o3.z,
-        i3.x, i3.y, i3.z,
-        i2.x, i2.y, i2.z,
-        // Quinto triángulo
+        
+        o1.x, o1.y, o1.z,
         o3.x, o3.y, o3.z,
         o4.x, o4.y, o4.z,
+        
+        // Cara interior (cuadrilátero del cubo interno)
+        i1.x, i1.y, i1.z,
         i3.x, i3.y, i3.z,
-        // Sexto triángulo
-        o4.x, o4.y, o4.z,
+        i2.x, i2.y, i2.z,
+        
+        i1.x, i1.y, i1.z,
         i4.x, i4.y, i4.z,
         i3.x, i3.y, i3.z,
-        // Séptimo triángulo
+        
+        // Lado 1 (conecta o1-o2 con i1-i2)
+        o1.x, o1.y, o1.z,
+        o2.x, o2.y, o2.z,
+        i2.x, i2.y, i2.z,
+        
+        o1.x, o1.y, o1.z,
+        i2.x, i2.y, i2.z,
+        i1.x, i1.y, i1.z,
+        
+        // Lado 2 (conecta o2-o3 con i2-i3)
+        o2.x, o2.y, o2.z,
+        o3.x, o3.y, o3.z,
+        i3.x, i3.y, i3.z,
+        
+        o2.x, o2.y, o2.z,
+        i3.x, i3.y, i3.z,
+        i2.x, i2.y, i2.z,
+        
+        // Lado 3 (conecta o3-o4 con i3-i4)
+        o3.x, o3.y, o3.z,
+        o4.x, o4.y, o4.z,
+        i4.x, i4.y, i4.z,
+        
+        o3.x, o3.y, o3.z,
+        i4.x, i4.y, i4.z,
+        i3.x, i3.y, i3.z,
+        
+        // Lado 4 (conecta o4-o1 con i4-i1)
         o4.x, o4.y, o4.z,
         o1.x, o1.y, o1.z,
-        i4.x, i4.y, i4.z,
-        // Octavo triángulo
-        o1.x, o1.y, o1.z,
+        i1.x, i1.y, i1.z,
+        
+        o4.x, o4.y, o4.z,
         i1.x, i1.y, i1.z,
         i4.x, i4.y, i4.z
     ]);
@@ -242,7 +263,7 @@ function createTrapezoid(o1, o2, o3, o4, i1, i2, i3, i4, zone) {
         emissive: zone.emissive,
         emissiveIntensity: 0.2,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.3,
         side: THREE.DoubleSide,
         roughness: 0.5,
         metalness: 0.3
@@ -257,7 +278,7 @@ function createTrapezoid(o1, o2, o3, o4, i1, i2, i3, i4, zone) {
         new THREE.LineBasicMaterial({ 
             color: zone.emissive,
             transparent: true,
-            opacity: 0.4
+            opacity: 0.6
         })
     );
     mesh.add(line);
@@ -461,6 +482,7 @@ function showMessage(text) {
             font-size: 16px;
             z-index: 1000;
             border: 2px solid #9C8BA7;
+            pointer-events: none;
         `;
         document.body.appendChild(msg);
     }
@@ -470,19 +492,22 @@ function showMessage(text) {
 
 function hideMessage() {
     const msg = document.getElementById('zone-message');
-    if (msg) msg.style.display = 'none';
+    if (msg) {
+        msg.style.display = 'none';
+    }
 }
 
 function animate() {
     requestAnimationFrame(animate);
     
     if (hypercube) {
-        hypercube.rotation.x += 0.002;
-        hypercube.rotation.y += 0.003;
+        // Rotación más lenta y suave
+        hypercube.rotation.x += 0.001;
+        hypercube.rotation.y += 0.0015;
     }
     
     if (innerCube) {
-        const pulse = Math.sin(Date.now() * 0.002) * 0.05 + 1;
+        const pulse = Math.sin(Date.now() * 0.001) * 0.03 + 1;
         innerCube.scale.set(pulse, pulse, pulse);
     }
     
