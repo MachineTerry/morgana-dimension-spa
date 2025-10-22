@@ -345,16 +345,23 @@ function onMouseMove(event) {
     // Primero verificar si estamos sobre el cubo interno
     const innerIntersects = raycaster.intersectObject(innerCube, false);
     
-    if (innerIntersects.length > 0) {
-        isOverCenter = true;
-        innerCube.material.emissiveIntensity = 0.8;
-        innerCube.material.opacity = 0.6;
-        renderer.domElement.style.cursor = 'pointer';
-        showTartaroPanel();
-        hoveredFace = null;
-        hideRoomPanel();
-        return;
+    if (intersects.length > 0) {
+    const object = intersects[0].object;
+    if (object.userData.isTrapezoid) {
+        const zone = zones[object.userData.zoneIndex];
+        showRoomPanel(zone, object.userData.zoneIndex);
+        
+        if (hoveredFace && hoveredFace !== object) {
+            hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
+            hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
+        }
+        hoveredFace = object;
+        object.material.opacity = 0.6;
+        object.material.emissiveIntensity = 0.7;
+        
+        return; // ← AGREGAR ESTE RETURN
     }
+}
     
     // Si no estamos sobre el cubo interno, ocultar su panel
     isOverCenter = false;
