@@ -400,15 +400,15 @@ function onMouseMove(event) {
     // Primero verificar si estamos sobre el cubo interno (más prioritario)
     const innerIntersects = raycaster.intersectObject(innerCube, false);
     
-if (innerIntersects.length > 0) {
-    isOverCenter = true;
-    innerCube.material.emissiveIntensity = 0.8;
-    innerCube.material.opacity = 0.6;
-    renderer.domElement.style.cursor = 'pointer';
-    showTartaroPanel(); // Nueva función
-    hoveredFace = null;
-    return;
-}
+    if (innerIntersects.length > 0) {
+        isOverCenter = true;
+        innerCube.material.emissiveIntensity = 0.8;
+        innerCube.material.opacity = 0.6;
+        renderer.domElement.style.cursor = 'pointer';
+        showMessage('Presiona G para acceder al Tártaro');
+        hoveredFace = null;
+        return; // Salir aquí para priorizar el cubo interno
+    }
     
     // Si no estamos sobre el cubo interno, verificar trapecios
     isOverCenter = false;
@@ -428,11 +428,10 @@ if (innerIntersects.length > 0) {
             showRoomPanel(zone, object.userData.zoneIndex);
         }
     } else {
-    isOverCenter = false;
-    hoveredFace = null;
-    renderer.domElement.style.cursor = 'grab';
-    hideTartaroPanel();
-}
+        hoveredFace = null;
+        renderer.domElement.style.cursor = 'grab';
+        // Ya no ocultar mensaje ni panel automáticamente
+    }
 }
 
 function onHypercubeClick(event) {
@@ -488,17 +487,15 @@ function onHypercubeClick(event) {
                 object.material.emissiveIntensity = 0.7;
             }
         }
-} else {
-    // Desktop: click entra directamente
-    if (hoveredFace && hoveredFace.userData.isTrapezoid) {
-        window.loadZone(hoveredFace.userData.zoneIndex);
+    } else {
+        // Desktop: click entra directamente
+        if (hoveredFace && hoveredFace.userData.isTrapezoid) {
+            window.loadZone(hoveredFace.userData.zoneIndex);
+        }
     }
-}
 }
 
 function onTouchStart(event) {
-    event.preventDefault();
-    
     if (event.touches.length !== 1) return;
     
     const touch = event.touches[0];
@@ -510,7 +507,7 @@ function onTouchStart(event) {
     const innerIntersects = raycaster.intersectObject(innerCube, false);
     
     if (innerIntersects.length > 0) {
-        // Iniciar long press
+        // Iniciar long press para Tártaro
         longPressStarted = false;
         longPressTimer = setTimeout(() => {
             // Long press completado
@@ -530,6 +527,9 @@ function onTouchStart(event) {
             innerCube.material.emissiveIntensity = 1.0;
             innerCube.material.opacity = 0.7;
         }
+        
+        // NO continuar procesando - solo long press para Tártaro
+        event.preventDefault();
     }
 }
 
@@ -605,6 +605,13 @@ function showRoomPanel(zone, zoneIndex) {
     }
 }
 
+function hideRoomPanel() {
+    const panel = document.getElementById('selected-room-panel');
+    if (panel) {
+        panel.style.display = 'none';
+    }
+}
+
 function showTartaroPanel() {
     let panel = document.getElementById('tartaro-panel');
     if (!panel) {
@@ -623,13 +630,6 @@ function showTartaroPanel() {
 
 function hideTartaroPanel() {
     const panel = document.getElementById('tartaro-panel');
-    if (panel) {
-        panel.style.display = 'none';
-    }
-}
-
-function hideRoomPanel() {
-    const panel = document.getElementById('selected-room-panel');
     if (panel) {
         panel.style.display = 'none';
     }
