@@ -277,7 +277,7 @@ const zonesData = {
             <p>El núcleo del Cubo de Morgana. El Tártaro no es simplemente otra zona: es el corazón oscuro de toda la dimensión, el punto desde el cual todo lo demás se expande. Aquí, en las profundidades absolutas, la realidad se rinde completamente. No hay física, no hay tiempo, no hay espacio en el sentido que conocemos.</p>
             
             <h2>El Centro del Vacío</h2>
-            <p>El Tártaro existe como un vacío dentro del vacío. Es la ausencia más pura, el lugar donde incluso la nada deja de tener significado. Los exploradores que han llegado hasta aquí —y los que han regresado son contados con los dedos de una mano— describen una oscuridad tan absoluta que devora la luz antes de que pueda existir.</p>
+            <p>El Tártaro existe como un vacío. Es la ausencia más pura, el lugar donde incluso la nada deja de tener significado. Los exploradores que han llegado hasta aquí —y los que han regresado son contados con los dedos de una mano— describen una oscuridad tan absoluta que devora la luz antes de que pueda existir.</p>
             
             <p>No hay suelo, no hay paredes, no hay techo. Flotas en un abismo infinito, sin referencias espaciales, sin forma de saber si estás cayendo o ascendiendo, si estás quieto o moviéndote a velocidades imposibles. El silencio aquí no es ausencia de sonido: es un silencio que <em>consume</em> el sonido, que lo borra de la existencia antes de que pueda propagarse.</p>
             
