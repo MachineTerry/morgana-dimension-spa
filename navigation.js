@@ -95,10 +95,10 @@ function toggleMusic() {
     if (!audioElement) {
         audioElement = document.createElement('audio');
         audioElement.loop = true;
-        audioElement.volume = 0.3;
+        audioElement.volume = 0.8;
         
         const source = document.createElement('source');
-        source.src = 'still.mp3';
+        source.src = 'daniel.mp3';
         source.type = 'audio/mpeg';
         audioElement.appendChild(source);
         document.body.appendChild(audioElement);
