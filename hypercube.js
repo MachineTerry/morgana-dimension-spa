@@ -424,16 +424,13 @@ function onMouseMove(event) {
             renderer.domElement.style.cursor = 'pointer';
             
             const zone = zones[object.userData.zoneIndex];
-            showMessage(`${zone.name} - ${zone.desc}`);
-            
-            // Mostrar panel de detalles
+            // Ya no mostrar mensaje flotante, solo panel
             showRoomPanel(zone, object.userData.zoneIndex);
         }
     } else {
         hoveredFace = null;
         renderer.domElement.style.cursor = 'grab';
-        hideMessage();
-        hideRoomPanel();
+        // Ya no ocultar mensaje ni panel automáticamente
     }
 }
 
@@ -465,20 +462,33 @@ function onHypercubeClick(event) {
         // Verificar primero cubo interno
         const innerIntersects = raycaster.intersectObject(innerCube, false);
         if (innerIntersects.length > 0) {
+            // En touch, solo iluminar, NO entrar automáticamente
             // Ya se manejó con long press
             return;
         }
         
-        // Luego trapecios
+        // Luego trapecios - SOLO SELECCIONAR, NO ENTRAR
         const intersects = raycaster.intersectObjects(trapezoidMeshes, false);
         
         if (intersects.length > 0) {
             const object = intersects[0].object;
             if (object.userData.isTrapezoid) {
-                window.loadZone(object.userData.zoneIndex);
+                // Solo mostrar panel, no entrar
+                const zone = zones[object.userData.zoneIndex];
+                showRoomPanel(zone, object.userData.zoneIndex);
+                
+                // Iluminar la zona
+                if (hoveredFace && hoveredFace !== object) {
+                    hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
+                    hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
+                }
+                hoveredFace = object;
+                object.material.opacity = 0.6;
+                object.material.emissiveIntensity = 0.7;
             }
         }
     } else {
+        // Desktop: click entra directamente
         if (hoveredFace && hoveredFace.userData.isTrapezoid) {
             window.loadZone(hoveredFace.userData.zoneIndex);
         }
@@ -556,11 +566,24 @@ function showRoomPanel(zone, zoneIndex) {
         panel.id = 'selected-room-panel';
         panel.className = 'selected-room';
         panel.innerHTML = `
+            <button id="close-room-panel" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: #BFC7C9; font-size: 20px; cursor: pointer; padding: 5px;">✕</button>
             <h3>📍 Zona Seleccionada</h3>
             <p id="room-name"></p>
             <button id="view-room-btn" class="view-room-btn">→ Explorar esta zona</button>
         `;
         document.getElementById('cube-view').appendChild(panel);
+        
+        // Agregar evento al botón de cerrar
+        document.getElementById('close-room-panel').addEventListener('click', (e) => {
+            e.stopPropagation();
+            hideRoomPanel();
+            // Resetear zona iluminada
+            if (hoveredFace) {
+                hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
+                hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
+                hoveredFace = null;
+            }
+        });
     }
     
     const nameEl = document.getElementById('room-name');
@@ -654,10 +677,10 @@ function toggleMusic() {
     if (!audioElement) {
         audioElement = document.createElement('audio');
         audioElement.loop = true;
-        audioElement.volume = 0.3;
+        audioElement.volume = 0.8;
         
         const source = document.createElement('source');
-        source.src = 'still.mp3';
+        source.src = 'daniel.mp3';
         source.type = 'audio/mpeg';
         audioElement.appendChild(source);
         document.body.appendChild(audioElement);
