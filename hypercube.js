@@ -327,39 +327,62 @@ function onMouseMove(event) {
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    
+
     raycaster.setFromCamera(mouse, camera);
-    
+
     // Resetear hover anterior de trapecios
     if (hoveredFace && hoveredFace.userData.isTrapezoid) {
         hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
         hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
     }
-    
-    // Resetear cubo interno
+
+    // Resetear cubo interno si no está en hover
     if (innerCube) {
+        innerCube.material.color.set(zones.tartaro.color);
+        innerCube.material.emissive.set(zones.tartaro.emissive);
         innerCube.material.emissiveIntensity = 0.3;
         innerCube.material.opacity = 0.25;
     }
-    
-    // Primero verificar si estamos sobre el cubo interno
+
+    // Verificar si estamos sobre el cubo interno (Tártaro)
     const innerIntersects = raycaster.intersectObject(innerCube, false);
-    
-    if (intersects.length > 0) {
-    const object = intersects[0].object;
-    if (object.userData.isTrapezoid) {
-        const zone = zones[object.userData.zoneIndex];
-        showRoomPanel(zone, object.userData.zoneIndex);
+
+    if (innerIntersects.length > 0) {
+        isOverCenter = true;
+        showTartaroPanel(); // Mostrar panel del Tártaro
         
-        if (hoveredFace && hoveredFace !== object) {
-            hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
-            hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
+        // Cambiar color y emisividad al hover
+        innerCube.material.color.set(0xFF0000); // Rojo intenso
+        innerCube.material.emissive.set(0x8B0000); // Rojo oscuro emisivo
+        innerCube.material.emissiveIntensity = 1.0;
+        innerCube.material.opacity = 0.7;
+        
+        renderer.domElement.style.cursor = 'pointer';
+        return; // ← Detener aquí para evitar que siga procesando trapecios
+    } else {
+        isOverCenter = false;
+        hideTartaroPanel();
+        renderer.domElement.style.cursor = 'grab';
+    }
+
+    // Verificar trapecios solo si NO estamos sobre el cubo interno
+    const trapIntersects = raycaster.intersectObjects(trapezoidMeshes, false);
+
+    if (trapIntersects.length > 0) {
+        const object = trapIntersects[0].object;
+
+        if (object.userData.isTrapezoid) {
+            hoveredFace = object;
+            object.material.opacity = 0.6;
+            object.material.emissiveIntensity = 0.7;
+            renderer.domElement.style.cursor = 'pointer';
+
+            const zone = zones[object.userData.zoneIndex];
+            showRoomPanel(zone, object.userData.zoneIndex);
         }
-        hoveredFace = object;
-        object.material.opacity = 0.6;
-        object.material.emissiveIntensity = 0.7;
-        
-        return; // ← AGREGAR ESTE RETURN
+    } else {
+        hoveredFace = null;
+        renderer.domElement.style.cursor = 'grab';
     }
 }
     
@@ -555,13 +578,12 @@ function showTartaroPanel() {
         panel.innerHTML = `
             <h3 style="color: #FF4444;">⚫ El Tártaro</h3>
             <p style="color: #BFC7C9;">Centro de la Dimensión - Abismo</p>
-            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona G para acceder</p>
+            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona <strong>G</strong> para acceder</p>
         `;
         document.getElementById('cube-view').appendChild(panel);
     }
     panel.style.display = 'block';
 }
-
 function hideTartaroPanel() {
     const panel = document.getElementById('tartaro-panel');
     if (panel) {
