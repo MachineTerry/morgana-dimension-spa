@@ -349,19 +349,20 @@ function onMouseMove(event) {
 
     if (innerIntersects.length > 0) {
         isOverCenter = true;
+        hideRoomPanel(); // 👈 Asegurar que el panel de zonas se cierre
         showTartaroPanel(); // Mostrar panel del Tártaro
         
         // Cambiar color y emisividad al hover
-        innerCube.material.color.set(0xFF0000); // Rojo intenso
-        innerCube.material.emissive.set(0x8B0000); // Rojo oscuro emisivo
+        innerCube.material.color.set(0xFF0000);
+        innerCube.material.emissive.set(0x8B0000);
         innerCube.material.emissiveIntensity = 1.0;
         innerCube.material.opacity = 0.7;
         
         renderer.domElement.style.cursor = 'pointer';
-        return; // ← Detener aquí para evitar que siga procesando trapecios
+        return; // ← Detener aquí
     } else {
         isOverCenter = false;
-        hideTartaroPanel();
+        hideTartaroPanel(); // 👈 Ocultar panel del Tártaro
         renderer.domElement.style.cursor = 'grab';
     }
 
@@ -383,6 +384,7 @@ function onMouseMove(event) {
     } else {
         hoveredFace = null;
         renderer.domElement.style.cursor = 'grab';
+        hideRoomPanel(); // 👈 Asegurar que el panel de zonas se cierre al salir
     }
 }
 
@@ -492,6 +494,13 @@ function onKeyDown(event) {
             setTimeout(() => {
                 window.loadZone('tartaro');
             }, 300);
+        }
+    }
+
+    // Entrar con Enter o Espacio si hay una zona seleccionada
+    if (event.key === 'Enter' || event.key === ' ') {
+        if (hoveredFace && hoveredFace.userData.isTrapezoid) {
+            window.loadZone(hoveredFace.userData.zoneIndex);
         }
     }
 }
