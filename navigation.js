@@ -61,6 +61,7 @@ function loadZone(zoneIndex) {
     cubeView.style.opacity = '0';
     setTimeout(() => {
         cubeView.style.display = 'none';
+        cubeView.classList.add('hidden');
         zoneView.style.display = 'block';
         setTimeout(() => {
             zoneView.classList.add('active');
@@ -78,9 +79,11 @@ function backToCube() {
     zoneView.classList.remove('active');
     setTimeout(() => {
         zoneView.style.display = 'none';
+        cubeView.classList.remove('hidden');
         cubeView.style.display = 'block';
         setTimeout(() => {
             cubeView.style.opacity = '1';
+            window.scrollTo(0, 0);
         }, 50);
     }, 500);
 }
