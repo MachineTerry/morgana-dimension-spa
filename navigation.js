@@ -19,6 +19,12 @@ function loadZone(zoneIndex) {
         zoneMessage.remove();
     }
     
+    // Ocultar panel de zona seleccionada
+    const roomPanel = document.getElementById('selected-room-panel');
+    if (roomPanel) {
+        roomPanel.style.display = 'none';
+    }
+    
     // Crear HTML de la zona
     const zoneHTML = `
         <div class="zone-container" style="
