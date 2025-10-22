@@ -2,13 +2,13 @@
 const zonesData = {
     0: {
         name: 'Copia de la Ciudad',
-        background: 'linear-gradient(135deg, #918e6d 0%, #D5D7D8 100%)',
-        containerBg: 'rgba(183, 197, 174, 0.95)',
-        borderColor: 'rgba(158, 179, 194, 0.3)',
-        titleColor: '#6B5A4A',
-        textColor: '#4B4E52',
-        infoBoxBg: 'rgba(166, 181, 154, 0.2)',
-        infoBoxBorder: '#A6B59A',
+        background: 'linear-gradient(135deg, #3D4F3A 0%, #6B7A68 100%)',
+        containerBg: 'rgba(107, 122, 104, 0.92)',
+        borderColor: 'rgba(139, 174, 140, 0.4)',
+        titleColor: '#E8EBD9',
+        textColor: '#D4D9CB',
+        infoBoxBg: 'rgba(139, 174, 140, 0.15)',
+        infoBoxBorder: '#8BAE8C',
         html: `
             <h1>🏙️ Copia de la Ciudad</h1>
             <img src="img/yokohama.webp" alt="Yokohama dentro del Cubo de Morgana">
@@ -246,6 +246,10 @@ const zonesData = {
             <p>El límite entre lo contenido y lo incontenible. La Frontera del Tártaro es el borde más lejano del Cubo de Morgana, donde las paredes se vuelven translúcidas y puedes ver —o creer que ves— lo que yace <em>más allá</em>.</p>
             
             <p>Aquí, la física misma se rinde. La gravedad tira simultáneamente en todas direcciones, creando una sensación nauseabunda de caída perpetua hacia ningún lado. El aire vibra con energía antinatural, cargado de partículas que no deberían existir.</p>
+
+            <p>Los espectros habitan las grietas entre dimensiones. No son fantasmas ni espíritus: son algo anterior, algo que nunca fue vivo pero tampoco está muerto. Te observan desde ángulos imposibles. Susurran nombres que reconoces pero que nunca has escuchado. Algunos exploradores reportan haber visto sus propios reflejos moverse independientemente, o encontrarse con versiones de sí mismos que tomaron decisiones diferentes.</p>
+
+            <p>La Frontera existe porque el Cubo de Morgana necesita un límite. Todo lo que el centro rechaza, toda la entropía y el caos, termina filtrándose hacia aquí. Es por eso que esta zona es simultáneamente el lugar más alejado y el más cercano al núcleo de la dimensión. Algunos teóricos creen que si caminas lo suficiente hacia la frontera, eventualmente llegarás de nuevo al centro... pero nadie que lo haya intentado ha regresado para confirmarlo.</p>
             
             <div style="background: rgba(86, 193, 211, 0.15); border: 2px solid #56C1D3; border-radius: 15px; padding: 25px; margin: 30px 0; text-align: center;">
                 <h3 style="color: #56C1D3; margin-bottom: 15px; font-size: 1.5em;">🌌 Fenómeno Especial</h3>
@@ -277,12 +281,12 @@ const zonesData = {
             <p>El núcleo del Cubo de Morgana. El Tártaro no es simplemente otra zona: es el corazón oscuro de toda la dimensión, el punto desde el cual todo lo demás se expande. Aquí, en las profundidades absolutas, la realidad se rinde completamente. No hay física, no hay tiempo, no hay espacio en el sentido que conocemos.</p>
             
             <h2>El Centro del Vacío</h2>
-            <p>El Tártaro existe como un vacío. Es la ausencia más pura, el lugar donde incluso la nada deja de tener significado. Los exploradores que han llegado hasta aquí —y los que han regresado son contados con los dedos de una mano— describen una oscuridad tan absoluta que devora la luz antes de que pueda existir.</p>
+            <p>El Tártaro existe como un vacío dentro del Morgana. Es la ausencia más pura, el lugar donde incluso la nada deja de tener significado. Los exploradores que han llegado hasta aquí —y los que han regresado son contados con los dedos de una mano— describen una oscuridad tan absoluta que devora la luz antes de que pueda existir.</p>
             
             <p>No hay suelo, no hay paredes, no hay techo. Flotas en un abismo infinito, sin referencias espaciales, sin forma de saber si estás cayendo o ascendiendo, si estás quieto o moviéndote a velocidades imposibles. El silencio aquí no es ausencia de sonido: es un silencio que <em>consume</em> el sonido, que lo borra de la existencia antes de que pueda propagarse.</p>
             
             <h2>La Frontera del Ser</h2>
-            <p>El Tártaro marca el límite entre existir y no existir. Aquellos que permanecen demasiado tiempo comienzan a <em>deshacerse</em>. No físicamente —eso sería demasiado simple— sino conceptualmente. Empiezas a olvidar que tienes forma. Luego olvidas que alguna vez fuiste algo definido. Finalmente, olvidas que alguna vez exististe como entidad separada del vacío.</p>
+            <p>El Abismo marca el límite entre existir y no existir. Aquellos que permanecen demasiado tiempo comienzan a <em>deshacerse</em>. No físicamente —eso sería demasiado simple— sino conceptualmente. Empiezas a olvidar que tienes forma. Luego olvidas que alguna vez fuiste algo definido. Finalmente, olvidas que alguna vez exististe como entidad separada del vacío.</p>
             
             <p>Algunos teorizan que el Tártaro no es un lugar, sino un estado. El estado de anti-existencia que existe debajo de toda realidad. La base sobre la cual todo lo demás se construye. Si el Cubo de Morgana es una dimensión atrapada entre mundos, el Tártaro es el fundamento sobre el que esa prisión dimensional se asienta.</p>
             
@@ -294,7 +298,7 @@ const zonesData = {
             <div style="background: rgba(86, 193, 211, 0.15); border: 2px solid #56C1D3; border-radius: 15px; padding: 25px; margin: 30px 0;">
                 <h3 style="color: #56C1D3; margin-bottom: 15px; font-size: 1.5em; text-align: center;">🌌 Evento Especial: El Mar de Estrellas</h3>
                 
-                <img src="img/marestrellas.jpg" alt="El Mar de Estrellas - Fenómeno del Tártaro" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px; margin: 20px 0; box-shadow: 0 8px 30px rgba(86, 193, 211, 0.4); border: 2px solid #56C1D3;">
+                <img src="img/marestrellas.jpg" alt="El Mar de Estrellas - Fenómeno de las Profundidades" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px; margin: 20px 0; box-shadow: 0 8px 30px rgba(86, 193, 211, 0.4); border: 2px solid #56C1D3;">
                 
                 <p style="color: #BFC7C9; margin-bottom: 15px; text-align: center; font-size: 1.05em;">
                     Una vez cada siglo terrestre (10 años dimensionales), el Tártaro experimenta una transformación única. 
@@ -311,8 +315,8 @@ const zonesData = {
                 </div>
                 
                 <p style="color: #56C1D3; font-size: 0.95em; font-style: italic; text-align: center; margin-top: 15px;">
-                    Este evento es considerado uno de los fenómenos más peligrosos y hermosos de toda la Dimensión de Morgana. 
-                    La luz reflejada no es simplemente visual: es información pura que penetra directamente en la consciencia.
+                    Este evento es considerado uno de los fenómenos más extremdamente raros de divisar de toda la Dimensión de Morgana. 
+                    La luz refleja las estrellas más lejanas, e información de todo tipo de tiempos. Si tu conciencia es capaz de tolerar la sobrecarga del "saber". Podrias tener contacto con el verdadero <em>ente</em> de este lugar.
                 </p>
             </div>
             
