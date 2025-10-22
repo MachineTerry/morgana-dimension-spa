@@ -315,7 +315,7 @@ const zonesData = {
                 </div>
                 
                 <p style="color: #56C1D3; font-size: 0.95em; font-style: italic; text-align: center; margin-top: 15px;">
-                    Este evento es considerado uno de los fenómenos más extremdamente raros de divisar de toda la Dimensión de Morgana. 
+                    Este evento es considerado uno de los fenómenos más extremedamente raros de observar, de toda la Dimensión de Morgana. 
                     La luz refleja las estrellas más lejanas, e información de todo tipo de tiempos. Si tu conciencia es capaz de tolerar la sobrecarga del "saber". Podrias tener contacto con el verdadero <em>ente</em> de este lugar.
                 </p>
             </div>
