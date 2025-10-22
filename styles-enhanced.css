@@ -1,0 +1,290 @@
+/* Importar estilos base existentes */
+/* Este archivo EXTIENDE tu styles.css original */
+
+/* ==================================
+   NUEVOS ESTILOS PARA FONDOS DE ZONA
+   ================================== */
+
+/* Contenedor principal de zona con fondo */
+#zone-view {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+/* Capa de fondo de imagen (fija con parallax) */
+.zone-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Capa de overlay de color (para legibilidad) */
+.zone-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    backdrop-filter: blur(3px);
+}
+
+/* Contenedor de contenido con fondo semitransparente */
+#zone-content {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+}
+
+/* ==================================
+   ESTILOS ESPECÍFICOS POR ZONA
+   ================================== */
+
+/* Zona 0 - Copia de la Ciudad (Yokohama) - Imagen CLARA */
+#zone-view[data-zone="0"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(61, 79, 58, 0.85) 0%, 
+        rgba(107, 122, 104, 0.85) 100%);
+}
+
+#zone-view[data-zone="0"] #zone-content {
+    background: rgba(107, 122, 104, 0.7);
+    border: 2px solid rgba(139, 174, 140, 0.4);
+}
+
+/* Zona 1 - Residencial - Imagen OSCURA */
+#zone-view[data-zone="1"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(20, 100, 100, 0.8) 0%, 
+        rgba(59, 153, 72, 0.8) 100%);
+}
+
+#zone-view[data-zone="1"] #zone-content {
+    background: rgba(28, 118, 134, 0.75);
+    border: 2px solid rgba(158, 179, 194, 0.4);
+}
+
+/* Zona 2 - Antinatura - Imagen OSCURA */
+#zone-view[data-zone="2"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(75, 0, 130, 0.82) 0%, 
+        rgba(139, 0, 139, 0.82) 100%);
+}
+
+#zone-view[data-zone="2"] #zone-content {
+    background: rgba(75, 0, 130, 0.78);
+    border: 2px solid rgba(186, 85, 211, 0.4);
+}
+
+/* Zona 3 - Protegida - Imagen CLARA */
+#zone-view[data-zone="3"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 153, 0.75) 0%, 
+        rgba(255, 215, 0, 0.75) 100%);
+}
+
+#zone-view[data-zone="3"] #zone-content {
+    background: rgba(255, 255, 153, 0.65);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    color: #1a1a1a;
+}
+
+#zone-view[data-zone="3"] h1,
+#zone-view[data-zone="3"] h2,
+#zone-view[data-zone="3"] h3 {
+    color: #2a2a2a !important;
+}
+
+#zone-view[data-zone="3"] p {
+    color: #1a1a1a !important;
+}
+
+#zone-view[data-zone="3"] .info-box {
+    background: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Zona 4 - Infraestructura - Imagen OSCURA */
+#zone-view[data-zone="4"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(0, 206, 209, 0.8) 0%, 
+        rgba(0, 139, 139, 0.8) 100%);
+}
+
+#zone-view[data-zone="4"] #zone-content {
+    background: rgba(0, 206, 209, 0.72);
+    border: 2px solid rgba(72, 209, 204, 0.4);
+}
+
+/* Zona 5 - Frontera (Morgana) - Imagen OSCURA con tonos púrpura */
+#zone-view[data-zone="5"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(75, 0, 80, 0.83) 0%, 
+        rgba(139, 10, 80, 0.83) 100%);
+}
+
+#zone-view[data-zone="5"] #zone-content {
+    background: rgba(75, 0, 80, 0.78);
+    border: 2px solid rgba(219, 112, 147, 0.4);
+}
+
+/* Tártaro - Imagen MUY OSCURA */
+#zone-view[data-zone="tartaro"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(13, 27, 42, 0.88) 0%, 
+        rgba(10, 10, 12, 0.88) 100%);
+}
+
+#zone-view[data-zone="tartaro"] #zone-content {
+    background: rgba(13, 27, 42, 0.82);
+    border: 2px solid rgba(86, 193, 211, 0.3);
+}
+
+/* ==================================
+   MEJORAS A ELEMENTOS EXISTENTES
+   ================================== */
+
+/* Imágenes dentro del contenido */
+#zone-content img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 25px 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Info boxes con mejor contraste */
+.zone-container .info-box {
+    background: rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(8px);
+    padding: 25px;
+    border-radius: 12px;
+    margin: 30px 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Botón de regreso mejorado */
+.back-to-cube-btn {
+    position: sticky;
+    top: 20px;
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    padding: 12px 25px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(156, 139, 167, 0.4);
+    color: white;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.back-to-cube-btn:hover {
+    background: rgba(156, 139, 167, 0.3);
+    border-color: rgba(156, 139, 167, 0.6);
+    transform: translateX(-5px);
+}
+
+/* Títulos con mejor sombra para legibilidad */
+#zone-content h1 {
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+}
+
+#zone-content h2 {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+#zone-content h3 {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+#zone-content p {
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 768px) {
+    #zone-content {
+        padding: 30px 20px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    #zone-content img {
+        max-height: 300px;
+    }
+    
+    .back-to-cube-btn {
+        font-size: 0.9em;
+        padding: 10px 20px;
+    }
+}
+
+/* ==================================
+   ANIMACIONES DE TRANSICIÓN
+   ================================== */
+
+#zone-view.active .zone-background {
+    animation: fadeInBackground 0.8s ease;
+}
+
+#zone-view.active .zone-overlay {
+    animation: fadeInOverlay 0.6s ease 0.2s both;
+}
+
+#zone-view.active #zone-content {
+    animation: slideInContent 0.7s ease 0.4s both;
+}
+
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInContent {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
