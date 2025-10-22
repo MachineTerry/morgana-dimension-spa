@@ -102,6 +102,8 @@ function init() {
     
     renderer.domElement.addEventListener('click', onHypercubeClick, false);
     renderer.domElement.addEventListener('touchend', onHypercubeClick, false);
+    renderer.domElement.addEventListener('touchstart', onTouchStart, false);
+    renderer.domElement.addEventListener('touchmove', onTouchMove, false);
     renderer.domElement.addEventListener('mousemove', onMouseMove, false);
     window.addEventListener('keydown', onKeyDown, false);
     window.addEventListener('resize', onWindowResize, false);
@@ -174,8 +176,8 @@ function createHypercube() {
         trapezoid.userData = { 
             zoneIndex: face.zone,
             isTrapezoid: true,
-            originalOpacity: 0.3,
-            originalEmissive: 0.2
+            originalOpacity: 0.15,
+            originalEmissive: 0.15
         };
         trapezoidMeshes.push(trapezoid);
         hypercube.add(trapezoid);
@@ -258,9 +260,9 @@ function createTrapezoid(o1, o2, o3, o4, i1, i2, i3, i4, zone) {
     const material = new THREE.MeshStandardMaterial({
         color: zone.color,
         emissive: zone.emissive,
-        emissiveIntensity: 0.2,
+        emissiveIntensity: 0.15,
         transparent: true,
-        opacity: 0.3,
+        opacity: 0.15,
         side: THREE.DoubleSide,
         roughness: 0.5,
         metalness: 0.3
@@ -305,9 +307,9 @@ function createCubeFromVertices(vertices, zone, isInner) {
     const material = new THREE.MeshStandardMaterial({
         color: zone.color,
         emissive: zone.emissive,
-        emissiveIntensity: isInner ? 0.5 : 0.1,
+        emissiveIntensity: isInner ? 0.3 : 0.1,
         transparent: true,
-        opacity: isInner ? 0.4 : 0.15,
+        opacity: isInner ? 0.25 : 0.15,
         roughness: 0.3,
         metalness: 0.7
     });
@@ -390,9 +392,9 @@ function onMouseMove(event) {
     }
     
     // Resetear cubo interno
-    if (innerCube && !isOverCenter) {
-        innerCube.material.emissiveIntensity = 0.5;
-        innerCube.material.opacity = 0.4;
+    if (innerCube) {
+        innerCube.material.emissiveIntensity = 0.3;
+        innerCube.material.opacity = 0.25;
     }
     
     // Primero verificar si estamos sobre el cubo interno (más prioritario)
@@ -400,8 +402,8 @@ function onMouseMove(event) {
     
     if (innerIntersects.length > 0) {
         isOverCenter = true;
-        innerCube.material.emissiveIntensity = 1.2;
-        innerCube.material.opacity = 0.8;
+        innerCube.material.emissiveIntensity = 0.8;
+        innerCube.material.opacity = 0.6;
         renderer.domElement.style.cursor = 'pointer';
         showMessage('Presiona G para acceder al Tártaro');
         hoveredFace = null;
@@ -417,23 +419,39 @@ function onMouseMove(event) {
         
         if (object.userData.isTrapezoid) {
             hoveredFace = object;
-            object.material.opacity = 0.7;
-            object.material.emissiveIntensity = 0.8;
+            object.material.opacity = 0.6;
+            object.material.emissiveIntensity = 0.7;
             renderer.domElement.style.cursor = 'pointer';
             
             const zone = zones[object.userData.zoneIndex];
             showMessage(`${zone.name} - ${zone.desc}`);
+            
+            // Mostrar panel de detalles
+            showRoomPanel(zone, object.userData.zoneIndex);
         }
     } else {
         hoveredFace = null;
         renderer.domElement.style.cursor = 'grab';
         hideMessage();
+        hideRoomPanel();
     }
 }
 
 function onHypercubeClick(event) {
     // Detectar si es touch o click
     const isTouch = event.type === 'touchend';
+    
+    // Cancelar long press si es touchend
+    if (isTouch && longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+        
+        // Si el long press se completó, no hacer nada más
+        if (longPressStarted) {
+            longPressStarted = false;
+            return;
+        }
+    }
     
     if (isTouch) {
         if (event.changedTouches.length === 0) return;
@@ -443,13 +461,20 @@ function onHypercubeClick(event) {
         mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
         
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects([innerCube, ...trapezoidMeshes], false);
+        
+        // Verificar primero cubo interno
+        const innerIntersects = raycaster.intersectObject(innerCube, false);
+        if (innerIntersects.length > 0) {
+            // Ya se manejó con long press
+            return;
+        }
+        
+        // Luego trapecios
+        const intersects = raycaster.intersectObjects(trapezoidMeshes, false);
         
         if (intersects.length > 0) {
             const object = intersects[0].object;
-            if (object.userData.isTartaro) {
-                window.loadZone('tartaro');
-            } else if (object.userData.isTrapezoid) {
+            if (object.userData.isTrapezoid) {
                 window.loadZone(object.userData.zoneIndex);
             }
         }
@@ -460,11 +485,106 @@ function onHypercubeClick(event) {
     }
 }
 
+function onTouchStart(event) {
+    event.preventDefault();
+    
+    if (event.touches.length !== 1) return;
+    
+    const touch = event.touches[0];
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+    
+    raycaster.setFromCamera(mouse, camera);
+    const innerIntersects = raycaster.intersectObject(innerCube, false);
+    
+    if (innerIntersects.length > 0) {
+        // Iniciar long press
+        longPressStarted = false;
+        longPressTimer = setTimeout(() => {
+            // Long press completado
+            longPressStarted = true;
+            if (innerCube) {
+                innerCube.material.emissiveIntensity = 1.5;
+                innerCube.material.opacity = 0.9;
+            }
+            
+            setTimeout(() => {
+                window.loadZone('tartaro');
+            }, 300);
+        }, 1500); // 1.5 segundos
+        
+        // Feedback visual inmediato
+        if (innerCube) {
+            innerCube.material.emissiveIntensity = 1.0;
+            innerCube.material.opacity = 0.7;
+        }
+    }
+}
+
+function onTouchMove(event) {
+    // Cancelar long press si el usuario mueve el dedo
+    if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+        
+        if (innerCube) {
+            innerCube.material.emissiveIntensity = 0.3;
+            innerCube.material.opacity = 0.25;
+        }
+    }
+}
+
 function onKeyDown(event) {
     if (event.key === 'g' || event.key === 'G') {
-        if (isOverCenter) {
-            window.loadZone('tartaro');
+        if (isOverCenter && innerCube) {
+            // Efecto de iluminación al presionar G
+            innerCube.material.emissiveIntensity = 1.5;
+            innerCube.material.opacity = 0.9;
+            
+            setTimeout(() => {
+                window.loadZone('tartaro');
+            }, 300);
         }
+    }
+}
+
+function showRoomPanel(zone, zoneIndex) {
+    let panel = document.getElementById('selected-room-panel');
+    if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'selected-room-panel';
+        panel.className = 'selected-room';
+        panel.innerHTML = `
+            <h3>📍 Zona Seleccionada</h3>
+            <p id="room-name"></p>
+            <button id="view-room-btn" class="view-room-btn">→ Explorar esta zona</button>
+        `;
+        document.getElementById('cube-view').appendChild(panel);
+    }
+    
+    const nameEl = document.getElementById('room-name');
+    const btn = document.getElementById('view-room-btn');
+    
+    if (nameEl && btn) {
+        nameEl.textContent = `${zone.name} — ${zone.desc}`;
+        panel.style.display = 'block';
+        
+        // Remover listeners anteriores
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        // Agregar nuevo listener
+        newBtn.addEventListener('click', () => {
+            window.loadZone(zoneIndex);
+        });
+    }
+}
+
+function hideRoomPanel() {
+    const panel = document.getElementById('selected-room-panel');
+    if (panel) {
+        panel.style.display = 'none';
     }
 }
 
@@ -534,10 +654,10 @@ function toggleMusic() {
     if (!audioElement) {
         audioElement = document.createElement('audio');
         audioElement.loop = true;
-        audioElement.volume = 0.8;
+        audioElement.volume = 0.3;
         
         const source = document.createElement('source');
-        source.src = 'daniel.mp3';
+        source.src = 'still.mp3';
         source.type = 'audio/mpeg';
         audioElement.appendChild(source);
         document.body.appendChild(audioElement);
