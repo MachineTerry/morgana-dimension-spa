@@ -400,15 +400,15 @@ function onMouseMove(event) {
     // Primero verificar si estamos sobre el cubo interno (más prioritario)
     const innerIntersects = raycaster.intersectObject(innerCube, false);
     
-    if (innerIntersects.length > 0) {
-        isOverCenter = true;
-        innerCube.material.emissiveIntensity = 0.8;
-        innerCube.material.opacity = 0.6;
-        renderer.domElement.style.cursor = 'pointer';
-        showMessage('Presiona G para acceder al Tártaro');
-        hoveredFace = null;
-        return; // Salir aquí para priorizar el cubo interno
-    }
+if (innerIntersects.length > 0) {
+    isOverCenter = true;
+    innerCube.material.emissiveIntensity = 0.8;
+    innerCube.material.opacity = 0.6;
+    renderer.domElement.style.cursor = 'pointer';
+    showTartaroPanel(); // Nueva función
+    hoveredFace = null;
+    return;
+}
     
     // Si no estamos sobre el cubo interno, verificar trapecios
     isOverCenter = false;
@@ -428,10 +428,11 @@ function onMouseMove(event) {
             showRoomPanel(zone, object.userData.zoneIndex);
         }
     } else {
-        hoveredFace = null;
-        renderer.domElement.style.cursor = 'grab';
-        // Ya no ocultar mensaje ni panel automáticamente
-    }
+    isOverCenter = false;
+    hoveredFace = null;
+    renderer.domElement.style.cursor = 'grab';
+    hideTartaroPanel();
+}
 }
 
 function onHypercubeClick(event) {
@@ -487,12 +488,12 @@ function onHypercubeClick(event) {
                 object.material.emissiveIntensity = 0.7;
             }
         }
-    } else {
-        // Desktop: click entra directamente
-        if (hoveredFace && hoveredFace.userData.isTrapezoid) {
-            window.loadZone(hoveredFace.userData.zoneIndex);
-        }
+} else {
+    // Desktop: click entra directamente
+    if (hoveredFace && hoveredFace.userData.isTrapezoid) {
+        window.loadZone(hoveredFace.userData.zoneIndex);
     }
+}
 }
 
 function onTouchStart(event) {
@@ -601,6 +602,29 @@ function showRoomPanel(zone, zoneIndex) {
         newBtn.addEventListener('click', () => {
             window.loadZone(zoneIndex);
         });
+    }
+}
+
+function showTartaroPanel() {
+    let panel = document.getElementById('tartaro-panel');
+    if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'tartaro-panel';
+        panel.className = 'selected-room';
+        panel.innerHTML = `
+            <h3 style="color: #FF4444;">⚫ El Tártaro</h3>
+            <p style="color: #BFC7C9;">Centro de la Dimensión - Abismo</p>
+            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona G para acceder</p>
+        `;
+        document.getElementById('cube-view').appendChild(panel);
+    }
+    panel.style.display = 'block';
+}
+
+function hideTartaroPanel() {
+    const panel = document.getElementById('tartaro-panel');
+    if (panel) {
+        panel.style.display = 'none';
     }
 }
 
