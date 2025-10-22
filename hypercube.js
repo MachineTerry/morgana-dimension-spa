@@ -10,7 +10,7 @@ let isOverCenter = false;
 let trapezoidMeshes = [];
 let longPressTimer = null;
 let longPressStarted = false;
-let selectedZonePanelVisible = false; // 👈 NUEVA VARIABLE PARA CONTROLAR EL PANEL
+let selectedZoneFace = null; // 👈 NUEVA VARIABLE: rastrea la zona seleccionada
 
 // Configuración de zonas con colores específicos
 const zones = {
@@ -333,8 +333,11 @@ function onMouseMove(event) {
 
     // Resetear hover anterior de trapecios
     if (hoveredFace && hoveredFace.userData.isTrapezoid) {
-        hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
-        hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
+        // Solo resetear si NO está seleccionada
+        if (hoveredFace !== selectedZoneFace) {
+            hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
+            hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
+        }
     }
 
     // Resetear cubo interno si no está en hover
@@ -375,21 +378,19 @@ function onMouseMove(event) {
 
         if (object.userData.isTrapezoid) {
             hoveredFace = object;
-            object.material.opacity = 0.6;
-            object.material.emissiveIntensity = 0.7;
+            // Si no está seleccionada, mostrar hover normal
+            if (object !== selectedZoneFace) {
+                object.material.opacity = 0.6;
+                object.material.emissiveIntensity = 0.7;
+            }
             renderer.domElement.style.cursor = 'pointer';
 
-            const zone = zones[object.userData.zoneIndex];
-            showRoomPanel(zone, object.userData.zoneIndex);
+            // No mostrar panel aquí — solo en click
         }
     } else {
         hoveredFace = null;
         renderer.domElement.style.cursor = 'grab';
-        
-        // 👇 Solo cerrar el panel si NO está visible (porque el usuario no hizo click)
-        if (!selectedZonePanelVisible) {
-            hideRoomPanel();
-        }
+        hideRoomPanel(); // 👈 Cerrar panel al salir
     }
 }
 
@@ -425,29 +426,33 @@ function onHypercubeClick(event) {
         if (intersects.length > 0) {
             const object = intersects[0].object;
             if (object.userData.isTrapezoid) {
-                const zone = zones[object.userData.zoneIndex];
-                showRoomPanel(zone, object.userData.zoneIndex);
-                
-                if (hoveredFace && hoveredFace !== object) {
-                    hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
-                    hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
-                }
-                hoveredFace = object;
-                object.material.opacity = 0.6;
-                object.material.emissiveIntensity = 0.7;
+                // Seleccionar zona
+                selectZone(object);
             }
         }
     } else {
-        // 👇 DESKTOP CLICK: SOLO SELECCIONAR, NO REDIRIGIR
+        // 👇 DESKTOP CLICK: SOLO SELECCIONAR
         if (hoveredFace && hoveredFace.userData.isTrapezoid) {
-            const zone = zones[hoveredFace.userData.zoneIndex];
-            showRoomPanel(zone, hoveredFace.userData.zoneIndex);
-            
-            // Asegurar que el hover visual esté activo
-            hoveredFace.material.opacity = 0.6;
-            hoveredFace.material.emissiveIntensity = 0.7;
+            selectZone(hoveredFace);
         }
     }
+}
+
+function selectZone(object) {
+    // Desiluminar la zona anterior si existe
+    if (selectedZoneFace && selectedZoneFace !== object) {
+        selectedZoneFace.material.opacity = selectedZoneFace.userData.originalOpacity;
+        selectedZoneFace.material.emissiveIntensity = selectedZoneFace.userData.originalEmissive;
+    }
+
+    // Iluminar la nueva zona
+    selectedZoneFace = object;
+    object.material.opacity = 0.6;
+    object.material.emissiveIntensity = 0.7;
+
+    // Mostrar panel
+    const zone = zones[object.userData.zoneIndex];
+    showRoomPanel(zone, object.userData.zoneIndex);
 }
 
 function onTouchStart(event) {
@@ -510,8 +515,8 @@ function onKeyDown(event) {
 
     // Entrar con Enter o Espacio si hay una zona seleccionada
     if (event.key === 'Enter' || event.key === ' ') {
-        if (hoveredFace && hoveredFace.userData.isTrapezoid) {
-            window.loadZone(hoveredFace.userData.zoneIndex);
+        if (selectedZoneFace && selectedZoneFace.userData.isTrapezoid) {
+            window.loadZone(selectedZoneFace.userData.zoneIndex);
         }
     }
 }
@@ -526,37 +531,26 @@ function showRoomPanel(zone, zoneIndex) {
             <button id="close-room-panel" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: #BFC7C9; font-size: 20px; cursor: pointer; padding: 5px;">✕</button>
             <h3>📍 Zona Seleccionada</h3>
             <p id="room-name"></p>
-            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona <strong>Enter</strong> o haz clic en el botón para entrar</p>
-            <button id="view-room-btn" class="view-room-btn">→ Explora Zona</button> <!-- 👈 Más corto -->
+            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona <strong>Enter</strong> o <strong>Espacio</strong> para entrar</p>
         `;
         document.getElementById('cube-view').appendChild(panel);
         
         document.getElementById('close-room-panel').addEventListener('click', (e) => {
             e.stopPropagation();
             hideRoomPanel();
-            selectedZonePanelVisible = false; // 👈 Marcar como cerrado
-            if (hoveredFace) {
-                hoveredFace.material.opacity = hoveredFace.userData.originalOpacity;
-                hoveredFace.material.emissiveIntensity = hoveredFace.userData.originalEmissive;
-                hoveredFace = null;
+            if (selectedZoneFace) {
+                selectedZoneFace.material.opacity = selectedZoneFace.userData.originalOpacity;
+                selectedZoneFace.material.emissiveIntensity = selectedZoneFace.userData.originalEmissive;
+                selectedZoneFace = null;
             }
         });
     }
     
     const nameEl = document.getElementById('room-name');
-    const btn = document.getElementById('view-room-btn');
     
-    if (nameEl && btn) {
+    if (nameEl) {
         nameEl.textContent = `${zone.name} — ${zone.desc}`;
         panel.style.display = 'block';
-        selectedZonePanelVisible = true; // 👈 Marcar como visible
-        
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        
-        newBtn.addEventListener('click', () => {
-            window.loadZone(zoneIndex);
-        });
     }
 }
 
@@ -564,7 +558,6 @@ function hideRoomPanel() {
     const panel = document.getElementById('selected-room-panel');
     if (panel) {
         panel.style.display = 'none';
-        selectedZonePanelVisible = false; // 👈 Resetear
     }
 }
 
