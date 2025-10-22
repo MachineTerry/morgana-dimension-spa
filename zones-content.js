@@ -1,7 +1,7 @@
-// Contenido de todas las zonas de la Dimensión de Morgana
 const zonesData = {
     0: {
         name: 'Copia de la Ciudad',
+        image: 'img/yokohama.webp', // Imagen 4 (ciudad vista aérea, neblinosa)
         background: 'linear-gradient(135deg, #3D4F3A 0%, #6B7A68 100%)',
         containerBg: 'rgba(107, 122, 104, 0.92)',
         borderColor: 'rgba(139, 174, 140, 0.4)',
@@ -11,8 +11,6 @@ const zonesData = {
         infoBoxBorder: '#8BAE8C',
         html: `
             <h1>🏙️ Copia de la Ciudad</h1>
-            <img src="img/yokohama.webp" alt="Yokohama dentro del Cubo de Morgana">
-            
             <p>La primera trampa del Cubo de Morgana: una réplica perfecta de tu ciudad natal. Las calles que reconoces, los edificios donde trabajaste, el parque donde jugabas de niño. Todo está ahí, exactamente como lo recordabas. Pero esta familiaridad es una <em>mentira seductora</em>, el anzuelo más peligroso que la dimensión puede tender.</p>
             
             <h2>La Ilusión de Normalidad</h2>
@@ -47,6 +45,7 @@ const zonesData = {
     
     1: {
         name: 'Zona Residencial',
+        image: 'img/residencial.webp', // Imagen 2 (interior de edificio moderno, pasillos, ventanas)
         background: 'linear-gradient(135deg, #146464 0%, #3b9948 100%)',
         containerBg: 'rgba(28, 118, 134, 0.95)',
         borderColor: 'rgba(158, 179, 194, 0.4)',
@@ -56,8 +55,6 @@ const zonesData = {
         infoBoxBorder: '#65c0a5',
         html: `
             <h1>🏘️ Zona Residencial</h1>
-            <img src="img/residencial.webp" alt="Zona Residencial dentro del Cubo de Morgana">
-            
             <p>Barrios suburbanos congelados en un eterno atardecer. La Zona Residencial parece, a primera vista, el lugar más normal del Cubo de Morgana. Casas de dos pisos con jardines bien cuidados, calles pavimentadas con nombres reconfortantes como "Avenida del Roble" o "Calle de las Magnolias". Pero esta normalidad es una mentira seductora. La zona es una <em>copia distorsionada</em> de la vida humana, un reflejo imperfecto que revela sus horrores lentamente.</p>
             
             <h2>La Gravedad Fragmentada</h2>
@@ -92,6 +89,7 @@ const zonesData = {
     
     2: {
         name: 'Zona Antinatura',
+        image: 'img/antinatura.jpg', // Imagen 3 (escaleras imposibles, geometría ilógica)
         background: 'linear-gradient(135deg, #0A0A0C 0%, #1B233A 100%)',
         containerBg: 'rgba(10, 10, 12, 0.9)',
         borderColor: 'rgba(181, 196, 241, 0.2)',
@@ -101,8 +99,6 @@ const zonesData = {
         infoBoxBorder: '#8E7FAF',
         html: `
             <h1>🌀 Zona Antinatura</h1>
-            <img src="img/antinatura.jpg" alt="Zona Antinatura dentro del Cubo de Morgana">
-            
             <p>Un vacío arquitectónico donde la realidad pierde su forma. Este no es un lugar construido ni copiado, sino un espacio que <em>rechaza</em> la existencia misma. Las escaleras de Penrose se materializan y desmaterializan, los pasillos forman círculos de Möbius imposibles, y las habitaciones existen en más de tres dimensiones simultáneamente.</p>
             
             <h2>Donde la Física se Rompe</h2>
@@ -138,6 +134,7 @@ const zonesData = {
     
     3: {
         name: 'Zona Protegida',
+        image: 'img/zonaprotegida.jpg', // ← Nueva ruta para esta imagen
         background: 'linear-gradient(135deg, #7A8B99 0%, #9EADB7 100%)',
         containerBg: 'rgba(158, 173, 183, 0.75)',
         borderColor: 'rgba(213, 215, 216, 0.5)',
@@ -147,8 +144,6 @@ const zonesData = {
         infoBoxBorder: '#D5D7D8',
         html: `
             <h1>💫 Zona Protegida</h1>
-            <img src="img/zonaprotegida.jpg" alt="Zona Protegida dentro del Cubo de Morgana">
-            
             <p>Un oasis de cordura en medio del caos dimensional. La Zona Protegida es el único lugar dentro del Cubo de Morgana donde las leyes de la física funcionan como deberían, donde el tiempo avanza linealmente, y donde el aire no vibra con energía antinatural. Es un refugio, un santuario construido no por Morgana, sino <em>a pesar de ella</em>.</p>
             
             <h2>Origen del Santuario</h2>
@@ -190,6 +185,7 @@ const zonesData = {
     
     4: {
         name: 'Zona de Infraestructura',
+        image: 'img/edificio.webp', // Imagen 5 (misma que Zona Protegida, pero con diferente overlay)
         background: 'linear-gradient(135deg, #264352 0%, #88c2cc 100%)',
         containerBg: 'rgba(103, 127, 146, 0.95)',
         borderColor: 'rgba(124, 157, 186, 0.3)',
@@ -199,8 +195,6 @@ const zonesData = {
         infoBoxBorder: '#182c3d',
         html: `
             <h1>🏢 Zona de Infraestructura</h1>
-            <img src="img/edificio.webp" alt="Edificio Corporativo dentro del Cubo de Morgana">
-            
             <p>Una ciudad vertical sin límites. La Zona de Infraestructura es una réplica distorsionada de metrópolis humanas, donde torres de oficinas se alzan hasta perderse en una neblina perpetua, y edificios corporativos se apilan unos sobre otros desafiando toda lógica arquitectónica. Es como si alguien hubiera tomado fragmentos de cien ciudades diferentes y los hubiera comprimido en un espacio que no debería poder contenerlos.</p>
             
             <p>Los rascacielos aquí no son construcciones estables. Se reconfiguran constantemente: un pasillo se alarga hasta convertirse en un corredor de kilómetros, luego se contrae violentamente hasta ser apenas un hueco. Las puertas cambian de ubicación con cada <em>ciclo</em> —nadie sabe exactamente qué define un ciclo, pero todos los exploradores pueden sentir cuando ocurre.</p>
@@ -232,6 +226,7 @@ const zonesData = {
     
     5: {
         name: 'Frontera del Tártaro',
+        image: 'img/tartaro.jpg', // Imagen 1 (abismo con estrellas y rocas flotantes)
         background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0A0C 100%)',
         containerBg: 'rgba(13, 27, 42, 0.9)',
         borderColor: 'rgba(86, 193, 211, 0.3)',
@@ -241,8 +236,6 @@ const zonesData = {
         infoBoxBorder: '#9B1B30',
         html: `
             <h1>⚛️ Frontera del Tártaro</h1>
-            <img src="img/tartaro.JPG" alt="Frontera del Tártaro dentro del Cubo de Morgana">
-            
             <p>El límite entre lo contenido y lo incontenible. La Frontera del Tártaro es el borde más lejano del Cubo de Morgana, donde las paredes se vuelven translúcidas y puedes ver —o creer que ves— lo que yace <em>más allá</em>.</p>
             
             <p>Aquí, la física misma se rinde. La gravedad tira simultáneamente en todas direcciones, creando una sensación nauseabunda de caída perpetua hacia ningún lado. El aire vibra con energía antinatural, cargado de partículas que no deberían existir.</p>
@@ -266,6 +259,7 @@ const zonesData = {
     
     tartaro: {
         name: 'El Tártaro - Abismo',
+        image: 'img/tartaro-abismo.webp', // Imagen 1 (mismo fondo, pero con overlay más oscuro)
         background: 'linear-gradient(135deg, #0D1B2A 0%, #0A0A0C 100%)',
         containerBg: 'rgba(13, 27, 42, 0.9)',
         borderColor: 'rgba(86, 193, 211, 0.3)',
@@ -275,9 +269,6 @@ const zonesData = {
         infoBoxBorder: '#9B1B30',
         html: `
             <h1>⚫ El Tártaro - Abismo</h1>
-            
-            <img src="img/tartaro-abismo.webp" alt="El Tártaro - Centro de la Dimensión">
-            
             <p>El núcleo del Cubo de Morgana. El Tártaro no es simplemente otra zona: es el corazón oscuro de toda la dimensión, el punto desde el cual todo lo demás se expande. Aquí, en las profundidades absolutas, la realidad se rinde completamente. No hay física, no hay tiempo, no hay espacio en el sentido que conocemos.</p>
             
             <h2>El Centro del Vacío</h2>
