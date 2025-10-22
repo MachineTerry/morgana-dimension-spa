@@ -12,16 +12,19 @@ function loadZone(zoneIndex) {
     const zoneView = document.getElementById('zone-view');
     const zoneContent = document.getElementById('zone-content');
     
-    // Ocultar el mensaje de zona si está visible
+    // Ocultar TODOS los mensajes y elementos del cubo
     const zoneMessage = document.getElementById('zone-message');
     if (zoneMessage) {
         zoneMessage.style.display = 'none';
+        zoneMessage.remove();
     }
     
     // Crear HTML de la zona
     const zoneHTML = `
         <div class="zone-container" style="
             background: ${zone.background};
+            min-height: 100vh;
+            padding: 40px 0;
         ">
             <div style="
                 background: ${zone.containerBg};
@@ -61,6 +64,7 @@ function loadZone(zoneIndex) {
         zoneView.style.display = 'block';
         setTimeout(() => {
             zoneView.classList.add('active');
+            window.scrollTo(0, 0); // Scroll al inicio
         }, 50);
     }, 500);
 }
