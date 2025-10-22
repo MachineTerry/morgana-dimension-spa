@@ -385,31 +385,6 @@ function onMouseMove(event) {
         renderer.domElement.style.cursor = 'grab';
     }
 }
-    
-    // Si no estamos sobre el cubo interno, ocultar su panel
-    isOverCenter = false;
-    hideTartaroPanel();
-    
-    // Verificar trapecios
-    const trapIntersects = raycaster.intersectObjects(trapezoidMeshes, false);
-    
-    if (trapIntersects.length > 0) {
-        const object = trapIntersects[0].object;
-        
-        if (object.userData.isTrapezoid) {
-            hoveredFace = object;
-            object.material.opacity = 0.6;
-            object.material.emissiveIntensity = 0.7;
-            renderer.domElement.style.cursor = 'pointer';
-            
-            const zone = zones[object.userData.zoneIndex];
-            showRoomPanel(zone, object.userData.zoneIndex);
-        }
-    } else {
-        hoveredFace = null;
-        renderer.domElement.style.cursor = 'grab';
-    }
-}
 
 function onHypercubeClick(event) {
     const isTouch = event.type === 'touchend';
