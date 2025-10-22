@@ -492,4 +492,60 @@ header h1 {
     .zone-container p {
         font-size: 1em;
     }
+    
+    .selected-room {
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+}
+
+/* Panel de zona seleccionada */
+.selected-room {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #9C8BA7;
+    max-width: 400px;
+    z-index: 500;
+    display: none;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.selected-room h3 {
+    color: #56C1D3;
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.selected-room p {
+    color: #BFC7C9;
+    margin: 0 0 15px 0;
+    font-size: 1em;
+}
+
+.view-room-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #9C8BA7 0%, #56C1D3 100%);
+    border: none;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 0.95em;
+}
+
+.view-room-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(156, 139, 167, 0.5);
 }
