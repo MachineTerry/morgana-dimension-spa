@@ -12,6 +12,12 @@ function loadZone(zoneIndex) {
     const zoneView = document.getElementById('zone-view');
     const zoneContent = document.getElementById('zone-content');
     
+    // Ocultar el mensaje de zona si está visible
+    const zoneMessage = document.getElementById('zone-message');
+    if (zoneMessage) {
+        zoneMessage.style.display = 'none';
+    }
+    
     // Crear HTML de la zona
     const zoneHTML = `
         <div class="zone-container" style="
