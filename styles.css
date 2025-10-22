@@ -350,18 +350,26 @@ header h1 {
     font-size: 16px;
     z-index: 1000;
     border: 2px solid #9C8BA7;
+    display: none;
+    pointer-events: none;
+}
+
+#zone-message.visible {
+    display: block;
 }
 
 /* Vista de zonas */
 #zone-view {
     width: 100%;
     min-height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
     opacity: 0;
     transition: opacity 0.5s ease;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1B233A 100%);
+    overflow-y: auto;
 }
 
 #zone-view.active {
@@ -370,6 +378,7 @@ header h1 {
 
 #zone-content {
     padding: 20px;
+    min-height: 100vh;
 }
 
 /* Botón volver al cubo */
