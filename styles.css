@@ -75,6 +75,11 @@ body {
     width: 100%;
     min-height: 100vh;
     background: linear-gradient(135deg, #0D1B2A 0%, #1B233A 100%);
+    transition: opacity 0.5s ease;
+}
+
+#cube-view.hidden {
+    display: none !important;
 }
 
 header {
