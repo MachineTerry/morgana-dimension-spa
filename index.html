@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dimensión de Morgana</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div style="text-align: center; color: #9C8BA7; font-size: 20px;">
+            🜂 Cargando Dimensión de Morgana...
+        </div>
+    </div>
+
+    <!-- Botón flotante de música -->
+    <button id="musicBtn" onclick="toggleMusic()">🔇</button>
+
+    <!-- Vista del Hipercubo -->
+    <div id="cube-view">
+        <div class="container">
+            <!-- HEADER -->
+            <header>
+                <h1>🜂 Dimensión de Morgana</h1>
+                <p class="intro">Un espacio entre dimensiones donde la realidad se fragmenta y lo imposible toma forma.</p>
+            </header>
+
+            <!-- HIPERCUBO INTERACTIVO -->
+            <div class="cube-section">
+                <h2>Explora el Hipercubo</h2>
+                <p class="cube-instruction">Interactúa con las caras trapezoidales para descubrir las 6 zonas • Presiona G sobre el cubo central para acceder al Tártaro</p>
+                
+                <div id="canvas-container"></div>
+            </div>
+
+            <!-- SOBRE LA DIMENSIÓN -->
+            <div class="about-section">
+                <h2>Sobre la Dimensión</h2>
+                <p>
+                    La Dimensión de Morgana es un espacio místico que existe más allá de nuestra 
+                    realidad conocida. Aquí, las leyes de la física se doblan, el tiempo fluye de 
+                    manera no lineal, y la magia es tan natural como respirar. Es una dimensión 
+                    viva que se reconfigura constantemente, atrapando a quienes se aventuran en su interior.
+                </p>
+                
+                <h3>Características Fundamentales</h3>
+                <ul>
+                    <li><strong>Tiempo no lineal:</strong> Los relojes se comportan erráticamente, los días pueden durar minutos o años</li>
+                    <li><strong>Magia ambiental:</strong> La energía ánima impregna cada rincón, alterando la realidad</li>
+                    <li><strong>Espacios interconectados:</strong> 7 zonas principales conectadas por geometría no-euclidiana</li>
+                    <li><strong>Reglas variables:</strong> Cada zona tiene sus propias leyes físicas y peligros únicos</li>
+                </ul>
+            </div>
+
+            <!-- TIPOS DE ZONAS -->
+            <div class="structure-section">
+                <h2>📍 Taxonomía de Zonas</h2>
+
+                <div class="rooms-grid">
+                    <div class="room-card copy">
+                        <div class="room-type copy">COPIAS EXACTAS</div>
+                        <div class="room-name">Réplicas del Mundo Real</div>
+                        <div class="room-info">
+                            <strong>Ejemplos:</strong> Ciudades, edificios corporativos, barrios residenciales<br>
+                            <strong>Naturaleza:</strong> Copias casi perfectas con distorsiones sutiles<br>
+                            <strong>Trampa:</strong> Familiaridad engañosa, reconfiguraciones constantes<br>
+                            <strong>Nivel de peligro:</strong> Bajo a Medio (según zona específica)
+                        </div>
+                    </div>
+
+                    <div class="room-card antinature">
+                        <div class="room-type antinature">ANTINATURA</div>
+                        <div class="room-name">Zonas de Física Violada</div>
+                        <div class="room-info">
+                            <strong>Características:</strong> Gravedad arbitraria, geometría imposible<br>
+                            <strong>Manifestación:</strong> Escaleras de Penrose, bucles espaciales<br>
+                            <strong>Detección:</strong> Claramente incorrecta, imposible ignorar<br>
+                            <strong>Nivel de peligro:</strong> Alto a Extremo
+                        </div>
+                    </div>
+
+                    <div class="room-card protected">
+                        <div class="room-type protected">ZONAS PROTEGIDAS</div>
+                        <div class="room-name">Territorios Sellados</div>
+                        <div class="room-info">
+                            <strong>Mantenimiento:</strong> Seres Íricos (guardianes dimensionales)<br>
+                            <strong>Física:</strong> Estable, euclidiana, predecible<br>
+                            <strong>Acceso:</strong> Restringido (requiere supervivencia probada)<br>
+                            <strong>Nivel de peligro:</strong> Mínimo (dentro del sello)
+                        </div>
+                    </div>
+
+                    <div class="room-card antinature">
+                        <div class="room-type antinature">GRIETAS DIMENSIONALES</div>
+                        <div class="room-name">Puntos de Ruptura</div>
+                        <div class="room-info">
+                            <strong>Origen:</strong> Daño estructural dimensional<br>
+                            <strong>Conexión:</strong> Contacto directo con el Tártaro<br>
+                            <strong>Habitantes:</strong> Espectros (alta concentración)<br>
+                            <strong>Nivel de peligro:</strong> Moderado a Alto
+                        </div>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-type">INTERSECCIONES LIMINALES</div>
+                        <div class="room-name">Espacios de Transición</div>
+                        <div class="room-info">
+                            <strong>Función:</strong> Conectan diferentes niveles del Cubo<br>
+                            <strong>Geometría:</strong> Ambigua, entre dos estados<br>
+                            <strong>Estabilidad:</strong> Variable (1-60 minutos)<br>
+                            <strong>Acceso:</strong> Puertas, ventanas, umbrales dimensionales
+                        </div>
+                    </div>
+
+                    <div class="room-card protected">
+                        <div class="room-type protected">PUERTAS CRISTALIZADAS</div>
+                        <div class="room-name">Conexiones Permanentes</div>
+                        <div class="room-info">
+                            <strong>Creadores:</strong> Organizaciones avanzadas<br>
+                            <strong>Naturaleza:</strong> Estabilizadas artificialmente<br>
+                            <strong>Ventana de uso:</strong> 10 minutos por ciclo<br>
+                            <strong>Duración:</strong> Indefinida (requiere mantenimiento)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item copy">
+                        <div class="legend-color" style="background: #8BAE8C;"></div>
+                        <span>Copias Exactas (Relativamente Seguras)</span>
+                    </div>
+                    <div class="legend-item antinature">
+                        <div class="legend-color" style="background: #8E7FAF;"></div>
+                        <span>Antinatura / Grietas (Peligrosas)</span>
+                    </div>
+                    <div class="legend-item protected">
+                        <div class="legend-color" style="background: #A6B59A;"></div>
+                        <span>Protegidas / Cristalizadas (Controladas)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRASLACIÓN GEOMÉTRICA -->
+            <div class="translation-demo">
+                <h2>⚡ Ciclo de Reconfiguración Dimensional</h2>
+                <p class="translation-intro">
+                    El Cubo de Morgana no es estático. Cada zona se reorganiza periódicamente, 
+                    alterando conexiones y convirtiendo rutas seguras en trampas mortales. 
+                    Comprender este ciclo es esencial para la supervivencia.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-step">
+                        <div class="timeline-number">1</div>
+                        <div class="timeline-content">
+                            <h3>Fase Estable</h3>
+                            <p>Las puertas conectan zonas de forma predecible. La métrica espacial está definida. Es seguro atravesar conexiones.</p>
+                            <div class="time-indicator">⏱️ Duración: Variable según profundidad (8min en nivel 1, 3seg en nivel 10)</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-number">2</div>
+                        <div class="timeline-content">
+                            <h3>Inicio de Reconfiguración</h3>
+                            <p>El Cubo comienza a rotar sus "caras". La geometría se reestructura gradualmente. Las puertas empiezan a cerrarse.</p>
+                            <div class="time-indicator">⚠️ Advertencia temprana - Evacuar zonas inestables</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-number">3</div>
+                        <div class="timeline-content">
+                            <h3>Punto Crítico</h3>
+                            <p>Estado de máximo peligro. Las puertas están indefinidas entre configuraciones. Cruzar = atrapamiento en geometría no-euclidiana.</p>
+                            <div class="time-indicator">🔴 CRÍTICO - No intentar atravesar puertas</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-number">4</div>
+                        <div class="timeline-content">
+                            <h3>Estabilización Completa</h3>
+                            <p>Nueva geometría establecida. Las puertas reabren en configuración diferente. Lo que era "norte" puede ahora ser "arriba".</p>
+                            <div class="time-indicator">✅ Seguro volver a transitar</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="timeline-number">5</div>
+                        <div class="timeline-content">
+                            <h3>Reinicio del Ciclo</h3>
+                            <p>El período de estabilidad comienza nuevamente. Los exploradores deben remapear conexiones antes del próximo ciclo.</p>
+                            <div class="time-indicator">🔄 Ciclo se repite indefinidamente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARACTERÍSTICAS CLAVE -->
+            <div class="structure-section">
+                <h2>🔑 Leyes Fundamentales de Morgana</h2>
+
+                <div class="features-section">
+                    <div class="feature-box">
+                        <h3>🔄 Geometría Dinámica</h3>
+                        <p>El Cubo rota constantemente en más de tres dimensiones. Las caras cambian de posición relativa. Una ruta memorizada se vuelve obsoleta en cada reconfiguración.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>🎭 Ilusión de Familiaridad</h3>
+                        <p>Las copias del mundo real son peligrosamente convincentes. Provocan desorientación psicológica al presentar versiones ligeramente alteradas de lugares conocidos.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>⏰ Ventanas Temporales Variables</h3>
+                        <p>La estabilidad disminuye con la profundidad. Nivel 1: 8 minutos seguros. Nivel 5: 90 segundos. Nivel 10: 2-3 segundos. Calcular mal = muerte.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>🌀 Ausencia de Exterior</h3>
+                        <p>No existe "afuera" del Cubo habitable. El espacio exterior es vacío absoluto. Salir durante reconfiguración resulta en desintegración instantánea.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>🔗 Topología No-Euclidiana</h3>
+                        <p>Las conexiones entre zonas no siguen lógica espacial normal. Dos puntos pueden estar simultáneamente cerca y lejos. Los triángulos suman más (o menos) de 180°.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <h3>💀 Concentración Espectral</h3>
+                        <p>Las grietas dimensionales emiten energía ánima excesiva, atrayendo espectros. Estas entidades no son fantasmas: son fragmentos de realidades alternativas colapsadas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vista de Zonas (oculta inicialmente) -->
+    <div id="zone-view" style="display: none;">
+        <div id="zone-content"></div>
+        <button class="back-to-cube-btn" onclick="backToCube()">← Volver al Hipercubo de Morgana</button>
+    </div>
+
+    <!-- Import map para Three.js -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+      }
+    }
+    </script>
+
+    <script type="module" src="hypercube.js"></script>
+    <script src="zones-content.js"></script>
+    <script src="navigation.js"></script>
+</body>
+</html>
