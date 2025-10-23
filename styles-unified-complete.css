@@ -1,0 +1,563 @@
+/* ==================================
+   DIMENSIÓN DE MORGANA - CSS COMPLETO
+   ================================== */
+
+/* ===== RESET Y GENERAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    overflow-x: hidden;
+    background: #0D1B2A;
+    color: #BFC7C9;
+}
+
+/* ===== LOADING SCREEN ===== */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0D1B2A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    transition: opacity 0.5s;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ===== BOTÓN DE MÚSICA ===== */
+#musicBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9C8BA7 0%, #56C1D3 100%);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 10000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#musicBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(156, 139, 167, 0.6);
+    background: linear-gradient(135deg, #A896B7 0%, #66D1E3 100%);
+}
+
+#musicBtn:active {
+    transform: scale(0.95);
+}
+
+/* ===== VISTA DEL CUBO (PÁGINA PRINCIPAL) ===== */
+#cube-view {
+    position: relative;
+    min-height: 100vh;
+    background-image: url('img/morgana.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+#cube-view::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(13, 27, 42, 0.75) 0%,
+        rgba(25, 30, 60, 0.75) 50%,
+        rgba(13, 27, 42, 0.75) 100%
+    );
+    z-index: 0;
+}
+
+#cube-view.hidden {
+    display: none !important;
+}
+
+/* Container principal */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+header h1 {
+    font-size: 3em;
+    color: #9C8BA7;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+}
+
+.intro {
+    font-size: 1.2em;
+    color: #BFC7C9;
+    font-style: italic;
+}
+
+/* Sección del cubo */
+.cube-section {
+    background: rgba(0, 0, 0, 0.80);
+    backdrop-filter: blur(12px);
+    padding: 40px 30px;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(156, 139, 167, 0.3);
+}
+
+.cube-section h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #56C1D3;
+    margin-bottom: 15px;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 1);
+}
+
+.cube-instruction {
+    text-align: center;
+    color: #9C8BA7;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+/* Canvas container */
+#canvas-container {
+    width: 100%;
+    height: 600px;
+    position: relative;
+    margin: 30px 0;
+    background: rgba(13, 27, 42, 0.60);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    border: 2px solid rgba(86, 193, 211, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Secciones generales de la página principal */
+.about-section, 
+.structure-section, 
+.translation-demo {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(15px);
+    padding: 40px 30px;
+    margin: 40px 0;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(156, 139, 167, 0.2);
+}
+
+.about-section h2, 
+.structure-section h2, 
+.translation-demo h2 {
+    color: #56C1D3;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 1);
+}
+
+.about-section h3 {
+    color: #9C8BA7;
+    font-size: 1.5em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.about-section p,
+.structure-section p,
+.translation-demo p {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* ===== VISTA DE ZONAS (SISTEMA COMPLETO) ===== */
+#zone-view {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+#zone-view.active {
+    display: block;
+}
+
+/* Fondo de imagen de zona */
+.zone-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Overlays por zona - MUY TRANSPARENTES */
+.zone-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    backdrop-filter: blur(1px);
+}
+
+/* Zona 0 - Ciudad */
+#zone-view[data-zone="0"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(61, 79, 58, 0.40) 0%,
+        rgba(107, 122, 104, 0.40) 100%);
+}
+
+/* Zona 1 - Residencial */
+#zone-view[data-zone="1"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(20, 100, 100, 0.50) 0%, 
+        rgba(59, 153, 72, 0.50) 100%);
+}
+
+/* Zona 2 - Antinatura */
+#zone-view[data-zone="2"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(75, 0, 130, 0.65) 0%, 
+        rgba(139, 0, 139, 0.65) 100%);
+}
+
+/* Zona 3 - Protegida (ESPECIAL - texto oscuro) */
+#zone-view[data-zone="3"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 220, 0.30) 0%,
+        rgba(255, 235, 150, 0.30) 100%);
+    backdrop-filter: blur(0.5px);
+}
+
+/* Zona 4 - Infraestructura */
+#zone-view[data-zone="4"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(38, 67, 82, 0.45) 0%, 
+        rgba(136, 194, 204, 0.45) 100%);
+}
+
+/* Zona 5 - Frontera */
+#zone-view[data-zone="5"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(13, 27, 42, 0.55) 0%, 
+        rgba(75, 0, 80, 0.55) 100%);
+}
+
+/* Tártaro */
+#zone-view[data-zone="tartaro"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(13, 27, 42, 0.70) 0%, 
+        rgba(10, 10, 12, 0.70) 100%);
+    backdrop-filter: blur(1.5px);
+}
+
+/* Contenedor de contenido de zona */
+#zone-content {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    min-height: 100vh;
+}
+
+/* Wrapper interno - SIN fondo duplicado */
+#zone-content > div {
+    background: transparent !important; /* Sin fondo en el wrapper */
+}
+
+/* Elementos individuales con fondos semi-transparentes */
+#zone-content h1 {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    text-align: center;
+    font-size: 2.8em;
+    margin: -80px -40px 30px -40px;
+    padding: 40px;
+    border-radius: 0;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+}
+
+#zone-content h2,
+#zone-content h3,
+#zone-content p {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 1);
+}
+
+#zone-content h2 {
+    font-size: 2em;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+#zone-content h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+#zone-content p {
+    line-height: 1.9;
+    font-size: 1.05em;
+}
+
+/* Imágenes */
+#zone-content img {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 25px 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    display: block;
+}
+
+/* Info boxes */
+.info-box {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(10px);
+    padding: 25px !important;
+    border-radius: 12px !important;
+    margin: 30px 0 !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-box p {
+    background: transparent !important;
+    padding: 5px 0 !important;
+    margin-bottom: 10px !important;
+    box-shadow: none !important;
+}
+
+/* ZONA PROTEGIDA - Estilos especiales para texto oscuro */
+#zone-view[data-zone="3"] #zone-content h1 {
+    background: rgba(255, 255, 230, 0.90) !important;
+    color: #2a2a2a !important;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6) !important;
+}
+
+#zone-view[data-zone="3"] #zone-content h2,
+#zone-view[data-zone="3"] #zone-content h3,
+#zone-view[data-zone="3"] #zone-content p {
+    background: rgba(255, 255, 230, 0.85) !important;
+    color: #1a1a1a !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4) !important;
+}
+
+#zone-view[data-zone="3"] .info-box {
+    background: rgba(255, 255, 200, 0.90) !important;
+}
+
+#zone-view[data-zone="3"] .info-box p {
+    color: #1a1a1a !important;
+}
+
+/* Botón de regreso */
+.back-to-cube-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 25px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(156, 139, 167, 0.5);
+    color: white;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1em;
+}
+
+.back-to-cube-btn:hover {
+    background: rgba(156, 139, 167, 0.4);
+    border-color: rgba(156, 139, 167, 0.8);
+    transform: translateX(-5px);
+    box-shadow: 0 6px 25px rgba(156, 139, 167, 0.5);
+}
+
+/* Panel de zona seleccionada */
+.selected-room {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #9C8BA7;
+    max-width: 400px;
+    z-index: 500;
+    display: none;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.selected-room h3 {
+    color: #56C1D3;
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.selected-room p {
+    color: #BFC7C9;
+    margin: 0 0 15px 0;
+    font-size: 1em;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+/* ===== ANIMACIONES ===== */
+#zone-view.active .zone-background {
+    animation: fadeInBackground 1s ease;
+}
+
+#zone-view.active .zone-overlay {
+    animation: fadeInOverlay 0.8s ease 0.2s both;
+}
+
+#zone-view.active #zone-content {
+    animation: fadeInContent 0.6s ease 0.4s both;
+}
+
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+    
+    #canvas-container {
+        height: 400px;
+    }
+    
+    #zone-content {
+        padding: 60px 20px;
+    }
+    
+    #zone-content h1 {
+        margin: -60px -20px 20px -20px;
+        padding: 30px 20px;
+        font-size: 2em;
+    }
+    
+    #zone-content h2,
+    #zone-content h3,
+    #zone-content p {
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+    
+    #zone-content img {
+        max-height: 300px;
+    }
+    
+    .back-to-cube-btn {
+        top: 10px;
+        left: 10px;
+        font-size: 0.85em;
+        padding: 10px 18px;
+    }
+    
+    #musicBtn {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .selected-room {
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: none;
+        transform: none;
+    }
+}
