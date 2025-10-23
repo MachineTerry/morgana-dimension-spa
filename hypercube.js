@@ -449,7 +449,6 @@ function selectZone(object) {
     selectedZoneFace = object;
     object.material.opacity = 0.6;
     object.material.emissiveIntensity = 0.7;
-    return; // Evita redirección en touch
 
     // Mostrar panel
     const zone = zones[object.userData.zoneIndex];
