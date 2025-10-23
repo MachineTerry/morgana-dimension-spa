@@ -1,12 +1,16 @@
+// Variables globales de música
+let audioElement = null;
+let isMusicPlaying = false;
+
 // Mapeo de imágenes de fondo para cada zona
 const zoneBackgrounds = {
-    0: 'img/yokohama.webp',
-    1: 'img/residencial.webp',
-    2: 'img/antinatura.jpg',
-    3: 'img/zonaprotegida.jpg',
-    4: 'img/edificio.webp',
-    5: 'img/morgana.jpg',
-    tartaro: 'img/tartaro-abismo.webp'
+    0: 'img/yokohama.webp',           // Ciudad
+    1: 'img/residencial.webp',        // Residencial
+    2: 'img/antinatura.jpg',          // Antinatura
+    3: 'img/zonaprotegida.jpg',       // Zona Protegida
+    4: 'img/edificio.webp',           // Infraestructura
+    5: 'img/tartaro.JPG',             // Frontera del Tártaro
+    tartaro: 'img/tartaro-abismo.webp' // El Tártaro - Abismo
 };
 
 // Función para cargar una zona con imagen de fondo
@@ -37,7 +41,7 @@ function loadZone(zoneIndex) {
     background.style.backgroundImage = `url('${zoneBackgrounds[zoneIndex]}')`;
     zoneView.appendChild(background);
     
-    // Crear overlay de color
+    // Crear overlay de color (los estilos están en styles-enhanced.css)
     const overlay = document.createElement('div');
     overlay.className = 'zone-overlay';
     zoneView.appendChild(overlay);
@@ -45,7 +49,12 @@ function loadZone(zoneIndex) {
     // Crear contenedor de contenido
     const content = document.createElement('div');
     content.id = 'zone-content';
-    content.innerHTML = zone.html;
+    
+    // Envolver el HTML en un div para aplicar estilos
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = zone.html;
+    content.appendChild(wrapper);
+    
     zoneView.appendChild(content);
     
     // Crear botón de regreso
@@ -96,20 +105,57 @@ function backToCube() {
     }, 300);
 }
 
+// Función de música
+function toggleMusic() {
+    const btn = document.getElementById('musicBtn');
+    
+    if (!audioElement) {
+        audioElement = document.createElement('audio');
+        audioElement.loop = true;
+        audioElement.volume = 0.8;
+        
+        const source = document.createElement('source');
+        source.src = 'daniel.mp3';
+        source.type = 'audio/mpeg';
+        audioElement.appendChild(source);
+        document.body.appendChild(audioElement);
+        
+        console.log('🎵 Audio element creado');
+    }
+    
+    if (isMusicPlaying) {
+        audioElement.pause();
+        btn.textContent = '🔇';
+        isMusicPlaying = false;
+        console.log('🔇 Música pausada');
+    } else {
+        audioElement.play()
+            .then(() => {
+                btn.textContent = '🔊';
+                isMusicPlaying = true;
+                console.log('🔊 Música reproduciéndose');
+            })
+            .catch(err => {
+                console.error('❌ Error reproduciendo música:', err);
+            });
+    }
+}
+
 // Función para precargar imágenes de fondo
 function preloadBackgrounds() {
     console.log('📸 Precargando imágenes de fondo...');
-    Object.values(zoneBackgrounds).forEach(imagePath => {
+    Object.entries(zoneBackgrounds).forEach(([zone, imagePath]) => {
         const img = new Image();
         img.src = imagePath;
-        img.onload = () => console.log('✅ Imagen cargada:', imagePath);
-        img.onerror = () => console.error('❌ Error cargando imagen:', imagePath);
+        img.onload = () => console.log(`✅ Imagen cargada [${zone}]:`, imagePath);
+        img.onerror = () => console.error(`❌ Error cargando [${zone}]:`, imagePath);
     });
 }
 
 // EXPORTAR FUNCIONES A WINDOW (CRÍTICO)
 window.loadZone = loadZone;
 window.backToCube = backToCube;
+window.toggleMusic = toggleMusic;
 
 // Precargar imágenes al cargar la página
 if (document.readyState === 'loading') {
@@ -123,5 +169,7 @@ console.log('🚀 Navigation enhanced cargado');
 console.log('📋 Funciones disponibles:', {
     loadZone: typeof window.loadZone,
     backToCube: typeof window.backToCube,
+    toggleMusic: typeof window.toggleMusic,
     zonesData: typeof zonesData
 });
+console.log('🖼️ Imágenes configuradas:', zoneBackgrounds);
