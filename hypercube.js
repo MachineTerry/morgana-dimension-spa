@@ -65,7 +65,7 @@ const zoneBackgrounds = {
     3: 'img/zonaprotegida.jpg',
     4: 'img/edificio.webp',
     5: 'img/tartaro.JPG',
-    tartaro: 'img/tartaro-abismo.JPG'
+    tartaro: 'img/tartaro-abismo.webp'
 };
 
 // Función para cargar una zona
