@@ -1,7 +1,3 @@
-// ========================================
-// NAVIGATION ENHANCED - VERSIÓN COMPLETA
-// ========================================
-
 // Mapeo de imágenes de fondo para cada zona
 const zoneBackgrounds = {
     0: 'img/yokohama.webp',
@@ -13,9 +9,7 @@ const zoneBackgrounds = {
     tartaro: 'img/tartaro-abismo.webp'
 };
 
-// ========================================
-// FUNCIÓN PRINCIPAL: Cargar Zona
-// ========================================
+// Función para cargar una zona con imagen de fondo
 function loadZone(zoneIndex) {
     console.log('🎯 loadZone llamada con:', zoneIndex);
     
@@ -63,7 +57,10 @@ function loadZone(zoneIndex) {
     
     // Transición suave
     cubeView.style.display = 'none';
+    cubeView.style.visibility = 'hidden';
+    
     zoneView.style.display = 'block';
+    zoneView.style.visibility = 'visible';
     
     // Trigger animations
     setTimeout(() => {
@@ -76,9 +73,7 @@ function loadZone(zoneIndex) {
     console.log('✅ Zona cargada exitosamente');
 }
 
-// ========================================
-// FUNCIÓN: Volver al Cubo
-// ========================================
+// Función para volver al cubo
 function backToCube() {
     const cubeView = document.getElementById('cube-view');
     const zoneView = document.getElementById('zone-view');
@@ -91,16 +86,17 @@ function backToCube() {
     // Esperar animación y cambiar
     setTimeout(() => {
         zoneView.style.display = 'none';
+        zoneView.style.visibility = 'hidden';
+        
         cubeView.style.display = 'block';
+        cubeView.style.visibility = 'visible';
         
         // Scroll al inicio
         window.scrollTo(0, 0);
     }, 300);
 }
 
-// ========================================
-// FUNCIÓN: Precargar Imágenes
-// ========================================
+// Función para precargar imágenes de fondo
 function preloadBackgrounds() {
     console.log('📸 Precargando imágenes de fondo...');
     Object.values(zoneBackgrounds).forEach(imagePath => {
@@ -111,125 +107,21 @@ function preloadBackgrounds() {
     });
 }
 
-// ========================================
-// PRECARGAR AL INICIO
-// ========================================
+// EXPORTAR FUNCIONES A WINDOW (CRÍTICO)
+window.loadZone = loadZone;
+window.backToCube = backToCube;
+
+// Precargar imágenes al cargar la página
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', preloadBackgrounds);
 } else {
     preloadBackgrounds();
 }
 
-// ========================================
-// DEBUG: Verificar que todo está disponible
-// ========================================
+// Debug: Verificar que todo está disponible
 console.log('🚀 Navigation enhanced cargado');
 console.log('📋 Funciones disponibles:', {
     loadZone: typeof window.loadZone,
     backToCube: typeof window.backToCube,
     zonesData: typeof zonesData
 });
-
-// Verificar después de 1 segundo
-setTimeout(() => {
-    if (typeof window.loadZone !== 'function') {
-        console.error('❌ ERROR CRÍTICO: window.loadZone no está definida después de cargar el script');
-    } else {
-        console.log('✅ window.loadZone está correctamente definida');
-    }
-}, 1000);    }, 50);
-    
-    // Scroll al inicio
-    window.scrollTo(0, 0);
-};
-
-// Función para volver al cubo
-function backToCube() {
-    const cubeView = document.getElementById('cube-view');
-    const zoneView = document.getElementById('zone-view');
-    
-    console.log('Volviendo al cubo...');
-    
-    // Remover clase active
-    zoneView.classList.remove('active');
-    
-    // Esperar animación y cambiar
-    setTimeout(() => {
-        zoneView.style.display = 'none';
-        cubeView.style.display = 'block';
-        
-        // Scroll al inicio
-        window.scrollTo(0, 0);
-    }, 300);
-}
-
-// Función para precargar imágenes de fondo
-function preloadBackgrounds() {
-    console.log('Precargando imágenes de fondo...');
-    Object.values(zoneBackgrounds).forEach(imagePath => {
-        const img = new Image();
-        img.src = imagePath;
-        img.onload = () => console.log('Imagen cargada:', imagePath);
-        img.onerror = () => console.error('Error cargando imagen:', imagePath);
-    });
-}
-
-// Precargar imágenes al cargar la página
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', preloadBackgrounds);
-} else {
-    preloadBackgrounds();
-}
-
-// Exportar funciones
-window.backToCube = backToCube;
-
-// Debug: Verificar que las funciones están disponibles
-console.log('Navigation enhanced cargado. Funciones disponibles:', {
-    loadZone: typeof window.loadZone,
-    backToCube: typeof window.backToCube,
-    zonesData: typeof zonesData
-});    zoneView.style.display = 'block';
-    
-    // Trigger animations
-    setTimeout(() => {
-        zoneView.classList.add('active');
-    }, 50);
-    
-    // Scroll al inicio
-    window.scrollTo(0, 0);
-};
-
-// Función para volver al cubo
-function backToCube() {
-    const cubeView = document.getElementById('cube-view');
-    const zoneView = document.getElementById('zone-view');
-    
-    // Remover clase active para animación de salida
-    zoneView.classList.remove('active');
-    
-    // Esperar a que termine la animación
-    setTimeout(() => {
-        zoneView.style.display = 'none';
-        cubeView.style.display = 'block';
-        cubeView.classList.remove('hidden');
-        
-        // Scroll al inicio
-        window.scrollTo(0, 0);
-    }, 300);
-}
-
-// Función para precargar imágenes de fondo
-function preloadBackgrounds() {
-    Object.values(zoneBackgrounds).forEach(imagePath => {
-        const img = new Image();
-        img.src = imagePath;
-    });
-}
-
-// Precargar imágenes al cargar la página
-window.addEventListener('load', preloadBackgrounds);
-
-// Exportar funciones globales
-window.loadZone = loadZone;
-window.backToCube = backToCube;
