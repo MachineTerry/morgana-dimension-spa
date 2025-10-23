@@ -1,8 +1,5 @@
-/* Importar estilos base existentes */
-/* Este archivo EXTIENDE tu styles.css original */
-
 /* ==================================
-   NUEVOS ESTILOS PARA FONDOS DE ZONA
+   VERSIÓN MEJORADA - FONDOS VISIBLES
    ================================== */
 
 /* Contenedor principal de zona con fondo */
@@ -27,7 +24,7 @@
     background-repeat: no-repeat;
 }
 
-/* Capa de overlay de color (para legibilidad) */
+/* Capa de overlay de color MÁS TRANSPARENTE (para ver mejor la imagen) */
 .zone-overlay {
     position: fixed;
     top: 0;
@@ -35,32 +32,270 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(2px); /* Menos blur para ver más la imagen */
 }
 
-/* Contenedor de contenido con fondo semitransparente */
+/* Contenedor de contenido - SIN fondo, solo texto con sombras */
 #zone-content {
     position: relative;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 60px 40px;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    padding: 80px 60px;
     min-height: 100vh;
+    /* SIN background - el texto flota sobre la imagen */
+}
+
+/* Contenedor interno para secciones con fondo semi-transparente */
+#zone-content > * {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Título principal sin fondo extra */
+#zone-content h1 {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(15px);
+    padding: 40px !important;
+    margin: -80px -60px 30px -60px !important;
+    border-radius: 0 !important;
+    text-align: center;
+    font-size: 2.8em;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Imágenes dentro del contenido */
+#zone-content img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    background: transparent !important;
+}
+
+/* Párrafos con mejor legibilidad */
+#zone-content p {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 1),
+                 0 0 20px rgba(0, 0, 0, 0.8);
+    line-height: 1.9;
+    font-size: 1.05em;
+}
+
+/* Subtítulos con mejor contraste */
+#zone-content h2 {
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 1),
+                 0 0 25px rgba(0, 0, 0, 0.9);
+    font-size: 2em;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+#zone-content h3 {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 1);
+    font-size: 1.5em;
+    margin-top: 25px;
 }
 
 /* ==================================
-   ESTILOS ESPECÍFICOS POR ZONA
+   OVERLAYS MÁS TRANSPARENTES POR ZONA
    ================================== */
 
-/* Zona 0 - Copia de la Ciudad (Yokohama) - Imagen CLARA */
+/* Zona 0 - Copia de la Ciudad (Yokohama) */
 #zone-view[data-zone="0"] .zone-overlay {
     background: linear-gradient(135deg, 
-        rgba(61, 79, 58, 0.85) 0%, 
-        rgba(107, 122, 104, 0.85) 100%);
+        rgba(61, 79, 58, 0.50) 0%,   /* Mucho más transparente */
+        rgba(107, 122, 104, 0.50) 100%);
 }
+
+/* Zona 1 - Residencial */
+#zone-view[data-zone="1"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(20, 100, 100, 0.45) 0%, 
+        rgba(59, 153, 72, 0.45) 100%);
+}
+
+/* Zona 2 - Antinatura */
+#zone-view[data-zone="2"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(75, 0, 130, 0.50) 0%, 
+        rgba(139, 0, 139, 0.50) 100%);
+}
+
+/* Zona 3 - Protegida */
+#zone-view[data-zone="3"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 153, 0.35) 0%,  /* Muy transparente */
+        rgba(255, 215, 0, 0.35) 100%);
+}
+
+#zone-view[data-zone="3"] #zone-content > * {
+    background: rgba(255, 255, 153, 0.85) !important;
+    color: #1a1a1a;
+}
+
+#zone-view[data-zone="3"] h1,
+#zone-view[data-zone="3"] h2,
+#zone-view[data-zone="3"] h3 {
+    color: #2a2a2a !important;
+}
+
+#zone-view[data-zone="3"] p {
+    color: #1a1a1a !important;
+}
+
+/* Zona 4 - Infraestructura */
+#zone-view[data-zone="4"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(0, 206, 209, 0.40) 0%,   /* Muy transparente para ver edificio */
+        rgba(0, 139, 139, 0.40) 100%);
+}
+
+/* Zona 5 - Frontera (Morgana) */
+#zone-view[data-zone="5"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(75, 0, 80, 0.45) 0%, 
+        rgba(139, 10, 80, 0.45) 100%);
+}
+
+/* Tártaro */
+#zone-view[data-zone="tartaro"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(13, 27, 42, 0.60) 0%,  /* Un poco más opaco para mantener oscuridad */
+        rgba(10, 10, 12, 0.60) 100%);
+}
+
+/* ==================================
+   INFO BOXES CON MEJOR CONTRASTE
+   ================================== */
+
+.info-box {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(10px);
+    padding: 25px !important;
+    border-radius: 12px !important;
+    margin: 30px 0 !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==================================
+   BOTÓN DE REGRESO MEJORADO
+   ================================== */
+
+.back-to-cube-btn {
+    position: fixed !important;
+    top: 20px;
+    left: 20px;
+    display: block;
+    width: fit-content;
+    margin: 0 !important;
+    padding: 12px 25px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(156, 139, 167, 0.5);
+    color: white;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.back-to-cube-btn:hover {
+    background: rgba(156, 139, 167, 0.4);
+    border-color: rgba(156, 139, 167, 0.8);
+    transform: translateX(-5px);
+    box-shadow: 0 6px 25px rgba(156, 139, 167, 0.5);
+}
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 768px) {
+    #zone-content {
+        padding: 60px 20px;
+    }
+    
+    #zone-content h1 {
+        margin: -60px -20px 20px -20px !important;
+        padding: 30px 20px !important;
+        font-size: 2em;
+    }
+    
+    #zone-content > * {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    #zone-content img {
+        max-height: 250px;
+    }
+    
+    .back-to-cube-btn {
+        top: 10px;
+        left: 10px;
+        font-size: 0.85em;
+        padding: 10px 18px;
+    }
+}
+
+/* ==================================
+   ANIMACIONES
+   ================================== */
+
+#zone-view.active .zone-background {
+    animation: fadeInBackground 1s ease;
+}
+
+#zone-view.active .zone-overlay {
+    animation: fadeInOverlay 0.8s ease 0.2s both;
+}
+
+#zone-view.active #zone-content {
+    animation: fadeInContent 0.6s ease 0.4s both;
+}
+
+@keyframes fadeInBackground {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}}
 
 #zone-view[data-zone="0"] #zone-content {
     background: rgba(107, 122, 104, 0.7);
