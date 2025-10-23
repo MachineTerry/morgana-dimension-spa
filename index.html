@@ -245,10 +245,6 @@
     <div id="zone-view" style="display: none;">
         <!-- El contenido se genera dinámicamente -->
     </div>
-
-    <!-- ========================================
-         SCRIPTS EN ORDEN CORRECTO
-         ======================================== -->
     
     <!-- ========================================
      SCRIPT DE MÚSICA - Agregar antes de importmap
@@ -257,6 +253,7 @@
 // Variables globales para la música
 let audioElement = null;
 let isMusicPlaying = false;
+let autoplayAttempted = false;
 
 // Función de música
 function toggleMusic() {
@@ -266,10 +263,10 @@ function toggleMusic() {
     if (!audioElement) {
         audioElement = document.createElement('audio');
         audioElement.loop = true;
-        audioElement.volume = 0.8;
+        audioElement.volume = 0.5; // Volumen inicial más bajo (50%)
         
         const source = document.createElement('source');
-        source.src = 'daniel.mp3';  // Asegúrate que este archivo existe en tu carpeta raíz
+        source.src = 'daniel.mp3';
         source.type = 'audio/mpeg';
         audioElement.appendChild(source);
         document.body.appendChild(audioElement);
@@ -281,32 +278,105 @@ function toggleMusic() {
     if (isMusicPlaying) {
         audioElement.pause();
         btn.textContent = '🔇';
+        btn.style.opacity = '0.7';
         isMusicPlaying = false;
         console.log('🔇 Música pausada');
     } else {
         audioElement.play()
             .then(() => {
                 btn.textContent = '🔊';
+                btn.style.opacity = '1';
                 isMusicPlaying = true;
                 console.log('🔊 Música reproduciéndose');
             })
             .catch(err => {
-                console.error('❌ Error reproduciendo música:', err);
-                alert('No se pudo reproducir la música. Verifica que el archivo daniel.mp3 existe.');
+                console.warn('⚠️ No se pudo reproducir automáticamente:', err.message);
+                // Mostrar indicador visual de que necesita hacer clic
+                btn.style.animation = 'pulse 1.5s infinite';
             });
     }
 }
 
-// Auto-iniciar música cuando se carga la página (opcional)
-// Descomenta estas líneas si quieres que empiece automáticamente:
+// Función para intentar auto-inicio
+function attemptAutoplay() {
+    if (autoplayAttempted) return;
+    autoplayAttempted = true;
+    
+    console.log('🎵 Intentando reproducir música automáticamente...');
+    toggleMusic();
+}
+
+// OPCIÓN 1: Intentar reproducir al cargar la página
 window.addEventListener('load', () => {
-    // Esperar interacción del usuario (requerido por navegadores)
-    document.body.addEventListener('click', () => {
-        if (!isMusicPlaying && audioElement) {
-            toggleMusic();
-        }
-    }, { once: true });
+    // Esperar un momento para que todo cargue
+    setTimeout(() => {
+        attemptAutoplay();
+    }, 1000);
 });
+
+// OPCIÓN 2: Reproducir en el primer clic/toque en cualquier parte
+document.addEventListener('click', () => {
+    if (!isMusicPlaying && !autoplayAttempted) {
+        console.log('🎵 Usuario hizo clic - iniciando música...');
+        attemptAutoplay();
+    }
+}, { once: true }); // Solo la primera vez
+
+// OPCIÓN 3: Reproducir al mover el mouse (más agresivo)
+document.addEventListener('mousemove', () => {
+    if (!isMusicPlaying && !autoplayAttempted) {
+        console.log('🎵 Usuario movió el mouse - iniciando música...');
+        attemptAutoplay();
+    }
+}, { once: true });
+
+// OPCIÓN 4: Reproducir al hacer scroll
+document.addEventListener('scroll', () => {
+    if (!isMusicPlaying && !autoplayAttempted) {
+        console.log('🎵 Usuario hizo scroll - iniciando música...');
+        attemptAutoplay();
+    }
+}, { once: true });
+
+// Vincular función al botón
+document.addEventListener('DOMContentLoaded', () => {
+    const musicBtn = document.getElementById('musicBtn');
+    if (musicBtn) {
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evitar que se active el listener de click del documento
+            toggleMusic();
+        });
+        
+        // Estilo inicial del botón
+        musicBtn.style.opacity = '0.7';
+        
+        console.log('✅ Botón de música vinculado');
+    }
+});
+
+// CSS para animación de pulso (agregar al head si no existe)
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        0%, 100% { 
+            transform: scale(1); 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        50% { 
+            transform: scale(1.1); 
+            box-shadow: 0 6px 25px rgba(156, 139, 167, 0.8);
+        }
+    }
+    
+    #musicBtn {
+        transition: all 0.3s ease;
+    }
+    
+    #musicBtn:hover {
+        animation: none !important;
+    }
+`;
+document.head.appendChild(style);
 </script>
 
     <!-- 2. Import map para Three.js -->
