@@ -1,3 +1,7 @@
+// ========================================
+// NAVIGATION ENHANCED - VERSIÓN COMPLETA
+// ========================================
+
 // Mapeo de imágenes de fondo para cada zona
 const zoneBackgrounds = {
     0: 'img/yokohama.webp',
@@ -5,23 +9,27 @@ const zoneBackgrounds = {
     2: 'img/antinatura.jpg',
     3: 'img/zonaprotegida.jpg',
     4: 'img/edificio.webp',
-    5: 'img/tartaro.jpg',
+    5: 'img/morgana.jpg',
     tartaro: 'img/tartaro-abismo.webp'
 };
 
-// Función para cargar una zona con imagen de fondo
-window.loadZone = function(zoneIndex) {
+// ========================================
+// FUNCIÓN PRINCIPAL: Cargar Zona
+// ========================================
+function loadZone(zoneIndex) {
+    console.log('🎯 loadZone llamada con:', zoneIndex);
+    
     const cubeView = document.getElementById('cube-view');
     const zoneView = document.getElementById('zone-view');
     
     // Obtener datos de la zona
     const zone = zonesData[zoneIndex];
     if (!zone) {
-        console.error('Zona no encontrada:', zoneIndex);
+        console.error('❌ Zona no encontrada:', zoneIndex);
         return;
     }
     
-    console.log('Cargando zona:', zoneIndex, zone.name);
+    console.log('✅ Zona encontrada:', zone.name);
     
     // Limpiar vista de zona
     zoneView.innerHTML = '';
@@ -61,6 +69,75 @@ window.loadZone = function(zoneIndex) {
     setTimeout(() => {
         zoneView.classList.add('active');
     }, 50);
+    
+    // Scroll al inicio
+    window.scrollTo(0, 0);
+    
+    console.log('✅ Zona cargada exitosamente');
+}
+
+// ========================================
+// FUNCIÓN: Volver al Cubo
+// ========================================
+function backToCube() {
+    const cubeView = document.getElementById('cube-view');
+    const zoneView = document.getElementById('zone-view');
+    
+    console.log('🔙 Volviendo al cubo...');
+    
+    // Remover clase active
+    zoneView.classList.remove('active');
+    
+    // Esperar animación y cambiar
+    setTimeout(() => {
+        zoneView.style.display = 'none';
+        cubeView.style.display = 'block';
+        
+        // Scroll al inicio
+        window.scrollTo(0, 0);
+    }, 300);
+}
+
+// ========================================
+// FUNCIÓN: Precargar Imágenes
+// ========================================
+function preloadBackgrounds() {
+    console.log('📸 Precargando imágenes de fondo...');
+    Object.values(zoneBackgrounds).forEach(imagePath => {
+        const img = new Image();
+        img.src = imagePath;
+        img.onload = () => console.log('✅ Imagen cargada:', imagePath);
+        img.onerror = () => console.error('❌ Error cargando imagen:', imagePath);
+    });
+}
+
+// ========================================
+// PRECARGAR AL INICIO
+// ========================================
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', preloadBackgrounds);
+} else {
+    preloadBackgrounds();
+}
+
+// ========================================
+// DEBUG: Verificar que todo está disponible
+// ========================================
+console.log('🚀 Navigation enhanced cargado');
+console.log('📋 Funciones disponibles:', {
+    loadZone: typeof window.loadZone,
+    backToCube: typeof window.backToCube,
+    zonesData: typeof zonesData
+});
+
+// Verificar después de 1 segundo
+setTimeout(() => {
+    if (typeof window.loadZone !== 'function') {
+        console.error('❌ ERROR CRÍTICO: window.loadZone no está definida después de cargar el script');
+    } else {
+        console.log('✅ window.loadZone está correctamente definida');
+    }
+}, 1000);    }, 50);
     
     // Scroll al inicio
     window.scrollTo(0, 0);
