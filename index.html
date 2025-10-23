@@ -246,7 +246,23 @@
         <!-- El contenido se genera dinámicamente -->
     </div>
 
-    <!-- Import map para Three.js -->
+    <!-- ========================================
+         SCRIPTS EN ORDEN CORRECTO
+         ======================================== -->
+    
+    <!-- 1. Función de música (debe estar ANTES de que se use) -->
+    <script>
+    function toggleMusic() {
+        console.log('🎵 Toggle music clicked');
+        const btn = document.getElementById('musicBtn');
+        if (btn) {
+            btn.textContent = btn.textContent === '🔇' ? '🔊' : '🔇';
+        }
+        // Aquí puedes agregar lógica de música más adelante
+    }
+    </script>
+
+    <!-- 2. Import map para Three.js -->
     <script type="importmap">
     {
       "imports": {
@@ -256,9 +272,30 @@
     }
     </script>
 
-    <!-- Scripts -->
-    <script type="module" src="hypercube.js"></script>
+    <!-- 3. Datos de zonas (PRIMERO) -->
     <script src="zones-content.js"></script>
-<script src="navigation-enhanced.js"></script>
+
+    <!-- 4. Navegación (SEGUNDO - define window.loadZone) -->
+    <script src="navigation-enhanced.js"></script>
+
+    <!-- 5. Hipercubo (TERCERO - usa window.loadZone) -->
+    <script type="module" src="hypercube.js"></script>
+
+    <!-- 6. Script de verificación (OPCIONAL - para debug) -->
+    <script>
+    window.addEventListener('load', () => {
+        console.log('🔍 Verificación final:');
+        console.log('  - zonesData:', typeof zonesData);
+        console.log('  - window.loadZone:', typeof window.loadZone);
+        console.log('  - window.backToCube:', typeof window.backToCube);
+        
+        if (typeof window.loadZone !== 'function') {
+            console.error('❌ CRÍTICO: window.loadZone NO está definida');
+            console.error('Verifica que navigation-enhanced.js se está cargando correctamente');
+        } else {
+            console.log('✅ Todo cargado correctamente');
+        }
+    });
+    </script>
 </body>
 </html>
