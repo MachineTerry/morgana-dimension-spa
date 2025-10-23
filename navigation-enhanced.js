@@ -153,5 +153,6 @@ function preloadBackgrounds() {
 // Precargar imágenes al cargar la página
 window.addEventListener('load', preloadBackgrounds);
 
-// Exportar funciones para uso global
+// Exportar funciones globales
+window.loadZone = loadZone;
 window.backToCube = backToCube;
