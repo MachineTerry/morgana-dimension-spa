@@ -144,7 +144,7 @@ const zonesData = {
         infoBoxBorder: '#D5D7D8',
         html: `
             <h1>💫 Zona Protegida</h1>
-            <p>Un oasis de cordura en medio del caos dimensional. La Zona Protegida es el único lugar dentro del Cubo de Morgana donde las leyes de la física funcionan como deberían, donde el tiempo avanza linealmente, y donde el aire no vibra con energía antinatural. Es un refugio, un santuario construido no por Morgana, sino <em>a pesar de ella</em>.</p>
+            <p>Un oasis de cordura en medio del caos dimensional. La Zona Protegida es el único lugar dentro del Cubo de Morgana donde las leyes de la física funcionan como deberían, donde el tiempo avanza linealmente, y donde el aire no vibra con energía antinatural. Es un refugio, un santuario construido la energia residual del <em>Iris de Morgan</em>.</p>
             
             <h2>Origen del Santuario</h2>
             <p>Hace eones, cuando la dimensión amenazaba con colapsar hacia la entropía total, los <em>Seres Íricos</em> —entidades de origen desconocido— intervinieron. Sellaron la grieta más grande que conectaba el Cubo con el vacío exterior, estabilizaron la geometría del espacio, y establecieron este territorio como zona neutral.</p>
@@ -154,7 +154,7 @@ const zonesData = {
             <h2>Los Guardianes Íricos</h2>
             <p>Los Guardianes Íricos no son benevolentes ni malevolos. Son <em>funcionales</em>. Su única misión es mantener el sello intacto y controlar quién accede a la Zona Protegida. No hablan, pero se comunican a través de resonancias mentales directas. Miden algo que llaman "coherencia volitiva" —la fuerza de voluntad de un individuo, su capacidad para mantener su identidad intacta frente a lo imposible.</p>
             
-            <p>Solo quienes han sobrevivido a las otras zonas del Cubo y resuelto el Enigma de Morgana pueden acceder aquí. No es una recompensa: es una <em>graduación</em>. Los Íricos evalúan si tu mente ha sido templada o quebrada por la experiencia. Si pasas, puedes entrar. Si fallas... bueno, la Frontera del Tártaro siempre necesita más especímenes.</p>
+            <p>Solo quienes han sobrevivido a las otras zonas del Cubo y resuelto el Enigma de Morgana pueden acceder aquí. Los Íricos evalúan si tu mente ha sido templada o quebrada por la experiencia. Si pasas, puedes entrar. Si fallas... bueno, la Frontera del Tártaro siempre necesita más especímenes.</p>
             
             <h2>Dentro de la Zona</h2>
             <p>El interior es desconcertantemente normal. Arquitectura euclidiana, gravedad constante, luz natural que emana de fuentes que parecen soles aunque no haya cielo visible. La zona está construida con bloques geométricos perfectos, superficies lisas de piedra clara que reflejan una luz difusa y reconfortante.</p>
