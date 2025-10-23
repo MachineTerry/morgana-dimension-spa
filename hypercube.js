@@ -57,6 +57,75 @@ const zones = {
     }
 };
 
+// Mapeo de imágenes de fondo (debe coincidir con el CSS)
+const zoneBackgrounds = {
+    0: 'img/yokohama.webp',
+    1: 'img/residencial.webp',
+    2: 'img/antinatura.jpg',
+    3: 'img/zonaprotegida.jpg',
+    4: 'img/edificio.webp',
+    5: 'img/tartaro.JPG',
+    tartaro: 'img/tartaro-abismo.JPG'
+};
+
+// Función para cargar una zona
+function loadZone(zoneId) {
+    // Ocultar la página principal
+    document.getElementById('cube-view').classList.add('hidden');
+
+    // Crear el contenedor de la zona
+    const zoneView = document.createElement('div');
+    zoneView.id = 'zone-view';
+    zoneView.setAttribute('data-zone', zoneId);
+    zoneView.classList.add('zone-active');
+
+    // Añadir el fondo y el contenido
+    const bgImage = zoneBackgrounds[zoneId] || '';
+    zoneView.innerHTML = `
+        <div class="zone-background" style="background-image: url('${bgImage}');"></div>
+        <div class="zone-overlay"></div>
+        <div id="zone-content">
+            ${zonesData[zoneId].html}
+        </div>
+        <button class="back-to-cube-btn" onclick="returnToCube()">Volver al Cubo</button>
+    `;
+
+    // Añadir al body
+    document.body.appendChild(zoneView);
+
+    // Cargar el CSS de zonas (solo si no está cargado)
+    if (!document.querySelector('link[href="styles-enhanced.css"]')) {
+        const zoneStyles = document.createElement('link');
+        zoneStyles.rel = 'stylesheet';
+        zoneStyles.href = 'styles-enhanced.css';
+        document.head.appendChild(zoneStyles);
+    }
+
+    // Activar animaciones
+    setTimeout(() => {
+        zoneView.classList.add('active');
+    }, 100);
+}
+
+// Función para volver al cubo
+function returnToCube() {
+    const zoneView = document.getElementById('zone-view');
+    if (zoneView) zoneView.remove();
+
+    // Mostrar la página principal
+    document.getElementById('cube-view').classList.remove('hidden');
+
+    // Remover el CSS de zonas
+    const zoneStyles = document.querySelector('link[href="styles-enhanced.css"]');
+    if (zoneStyles) zoneStyles.remove();
+}
+
+// Ejemplo de cómo llamar a loadZone desde la interacción del cubo
+function onZoneSelected(zoneId) {
+    loadZone(zoneId);
+}
+
+
 function init() {
     const container = document.getElementById('canvas-container');
     if (!container) {
