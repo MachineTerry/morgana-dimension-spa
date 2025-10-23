@@ -1,16 +1,26 @@
 /* ==================================
-   VERSIÓN MEJORADA - IMÁGENES MUY VISIBLES
+   STYLES ENHANCED - VERSIÓN FINAL
+   Este archivo SOBRESCRIBE algunos estilos de styles.css
+   para las vistas de zonas con imágenes de fondo
    ================================== */
 
-/* Contenedor principal de zona con fondo */
+/* ===== VISTA DE ZONAS (SISTEMA COMPLETO) ===== */
 #zone-view {
-    position: relative;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    z-index: 100;
     overflow-y: auto;
 }
 
-/* Capa de fondo de imagen (fija con parallax) */
+#zone-view.active {
+    display: block;
+}
+
+/* Fondo de imagen de zona */
 .zone-background {
     position: fixed;
     top: 0;
@@ -25,122 +35,64 @@
 }
 
 /* ==================================
-   OVERLAYS MUY TRANSPARENTES (IMÁGENES VISIBLES)
+   OVERLAYS POR ZONA - TRANSPARENTES
    ================================== */
 
-/* Zona 0 - Copia de la Ciudad (40% opacidad) */
-#zone-view[data-zone="0"] .zone-overlay {
+.zone-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
+    backdrop-filter: blur(1px);
+}
+
+/* Zona 0 - Ciudad */
+#zone-view[data-zone="0"] .zone-overlay {
     background: linear-gradient(135deg, 
         rgba(61, 79, 58, 0.40) 0%,
         rgba(107, 122, 104, 0.40) 100%);
-    backdrop-filter: blur(1px);
 }
 
-/* Zona 1 - Residencial (50% opacidad) */
+/* Zona 1 - Residencial */
 #zone-view[data-zone="1"] .zone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: linear-gradient(135deg, 
         rgba(20, 100, 100, 0.50) 0%, 
         rgba(59, 153, 72, 0.50) 100%);
-    backdrop-filter: blur(1px);
 }
 
-/* Zona 2 - Antinatura (65% opacidad - más oscura) */
+/* Zona 2 - Antinatura */
 #zone-view[data-zone="2"] .zone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: linear-gradient(135deg, 
         rgba(75, 0, 130, 0.65) 0%, 
         rgba(139, 0, 139, 0.65) 100%);
-    backdrop-filter: blur(1px);
 }
 
-/* Zona 3 - Protegida (25% opacidad - MUY VISIBLE) */
+/* Zona 3 - Protegida (ESPECIAL - texto oscuro) */
 #zone-view[data-zone="3"] .zone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: linear-gradient(135deg, 
-        rgba(255, 255, 220, 0.25) 0%,
-        rgba(255, 235, 150, 0.25) 100%);
+        rgba(255, 255, 220, 0.30) 0%,
+        rgba(255, 235, 150, 0.30) 100%);
     backdrop-filter: blur(0.5px);
 }
 
-/* Zona 3 - Contenido con fondo claro */
-#zone-view[data-zone="3"] #zone-content > div {
-    background: rgba(255, 255, 230, 0.85) !important;
-    backdrop-filter: blur(10px);
-}
-
-#zone-view[data-zone="3"] h1,
-#zone-view[data-zone="3"] h2,
-#zone-view[data-zone="3"] h3 {
-    color: #2a2a2a !important;
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6) !important;
-}
-
-#zone-view[data-zone="3"] p,
-#zone-view[data-zone="3"] li,
-#zone-view[data-zone="3"] em,
-#zone-view[data-zone="3"] strong {
-    color: #1a1a1a !important;
-    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4) !important;
-}
-
-/* Zona 4 - Infraestructura (45% opacidad) */
+/* Zona 4 - Infraestructura */
 #zone-view[data-zone="4"] .zone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: linear-gradient(135deg, 
         rgba(38, 67, 82, 0.45) 0%, 
         rgba(136, 194, 204, 0.45) 100%);
-    backdrop-filter: blur(1px);
 }
 
-/* Zona 5 - Frontera (55% opacidad) */
+/* Zona 5 - Frontera */
 #zone-view[data-zone="5"] .zone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: linear-gradient(135deg, 
         rgba(13, 27, 42, 0.55) 0%, 
         rgba(75, 0, 80, 0.55) 100%);
-    backdrop-filter: blur(1px);
 }
 
-/* Tártaro (70% opacidad - más misterioso) */
+/* Tártaro */
 #zone-view[data-zone="tartaro"] .zone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: linear-gradient(135deg, 
         rgba(13, 27, 42, 0.70) 0%, 
         rgba(10, 10, 12, 0.70) 100%);
@@ -148,116 +100,179 @@
 }
 
 /* ==================================
-   CONTENIDO CON FONDOS SEMI-TRANSPARENTES
+   CONTENEDOR DE ZONA
    ================================== */
 
-#zone-content {
+/* Sobrescribir el #zone-content del styles.css */
+#zone-view #zone-content {
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 80px 60px;
+    padding: 80px 40px;
     min-height: 100vh;
 }
 
-/* Cajas de contenido con fondo mejorado */
-#zone-content > div {
+/* Contenedor principal CON fondo semi-transparente */
+#zone-view .zone-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px 40px;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(12px);
-    padding: 40px;
-    margin-bottom: 30px;
-    border-radius: 15px;
+    border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     border: 2px solid rgba(255, 255, 255, 0.1);
+    line-height: 1.8;
 }
 
-/* Título principal */
-#zone-content h1 {
+/* ==================================
+   ELEMENTOS DE TEXTO
+   ================================== */
+
+#zone-view .zone-container h1 {
     text-align: center;
-    font-size: 2.8em;
     margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 300;
+    letter-spacing: 2px;
     padding-bottom: 20px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     text-shadow: 0 4px 20px rgba(0, 0, 0, 1),
                  0 0 40px rgba(0, 0, 0, 0.8);
 }
 
-/* Subtítulos */
-#zone-content h2 {
-    font-size: 2em;
-    margin: 30px 0 15px;
-    padding-top: 20px;
-    border-top: 2px solid rgba(255, 255, 255, 0.15);
+#zone-view .zone-container h2 {
+    font-size: 1.8em;
+    margin: 30px 0 15px 0;
+    font-weight: 400;
+    letter-spacing: 1px;
     text-shadow: 0 3px 15px rgba(0, 0, 0, 1),
                  0 0 30px rgba(0, 0, 0, 0.9);
 }
 
-#zone-content h3 {
+#zone-view .zone-container h3 {
     font-size: 1.5em;
-    margin-top: 25px;
+    margin: 25px 0 15px 0;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 1);
 }
 
-/* Párrafos con mejor legibilidad */
-#zone-content p {
-    line-height: 1.9;
+#zone-view .zone-container p {
+    line-height: 1.8;
     margin-bottom: 20px;
-    font-size: 1.05em;
+    font-size: 1.1em;
+    text-align: justify;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 1),
                  0 0 20px rgba(0, 0, 0, 0.8);
 }
 
-#zone-content em {
+#zone-view .zone-container em {
     font-style: italic;
     font-weight: 600;
 }
 
-#zone-content strong {
+#zone-view .zone-container strong {
     font-weight: 700;
 }
 
-/* Imágenes dentro del contenido */
-#zone-content img {
+/* ==================================
+   IMÁGENES
+   ================================== */
+
+#zone-view .zone-container img {
     width: 100%;
-    max-height: 450px;
+    height: auto;
+    max-height: 500px;
+    border-radius: 10px;
+    display: block;
     object-fit: cover;
-    border-radius: 12px;
-    margin: 25px 0;
+    margin-bottom: 30px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
     border: 3px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Info boxes con mejor contraste */
-.info-box {
-    background: rgba(0, 0, 0, 0.85) !important;
+/* ==================================
+   INFO BOXES
+   ================================== */
+
+#zone-view .info-box {
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
-    padding: 25px !important;
-    border-radius: 12px !important;
-    margin: 30px 0 !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.info-box p {
+#zone-view .info-box p {
     margin-bottom: 12px;
+    font-size: 1em;
+    text-align: left;
 }
 
-.info-box p:last-child {
+#zone-view .info-box p:last-child {
     margin-bottom: 0;
+}
+
+#zone-view .info-box strong {
+    font-weight: 700;
+}
+
+/* ==================================
+   ZONA PROTEGIDA - ESTILOS ESPECIALES
+   ================================== */
+
+/* Contenedor con fondo claro */
+#zone-view[data-zone="3"] .zone-container {
+    background: rgba(255, 255, 230, 0.90);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+/* Títulos oscuros */
+#zone-view[data-zone="3"] .zone-container h1,
+#zone-view[data-zone="3"] .zone-container h2,
+#zone-view[data-zone="3"] .zone-container h3 {
+    color: #2a2a2a;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
+}
+
+/* Texto oscuro */
+#zone-view[data-zone="3"] .zone-container p,
+#zone-view[data-zone="3"] .zone-container li,
+#zone-view[data-zone="3"] .zone-container em,
+#zone-view[data-zone="3"] .zone-container strong {
+    color: #1a1a1a;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+/* Info box clara */
+#zone-view[data-zone="3"] .info-box {
+    background: rgba(255, 255, 200, 0.85);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+}
+
+#zone-view[data-zone="3"] .info-box p,
+#zone-view[data-zone="3"] .info-box strong {
+    color: #1a1a1a;
 }
 
 /* ==================================
    BOTÓN DE REGRESO
    ================================== */
 
-.back-to-cube-btn {
+#zone-view .back-to-cube-btn {
     position: fixed;
     top: 20px;
     left: 20px;
+    display: block;
+    width: fit-content;
+    margin: 0;
     padding: 12px 25px;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(15px);
     border: 2px solid rgba(156, 139, 167, 0.5);
     color: white;
+    text-decoration: none;
     border-radius: 25px;
     font-weight: 500;
     cursor: pointer;
@@ -268,45 +283,11 @@
     font-size: 1em;
 }
 
-.back-to-cube-btn:hover {
+#zone-view .back-to-cube-btn:hover {
     background: rgba(156, 139, 167, 0.4);
     border-color: rgba(156, 139, 167, 0.8);
     transform: translateX(-5px);
     box-shadow: 0 6px 25px rgba(156, 139, 167, 0.5);
-}
-
-/* ==================================
-   RESPONSIVE
-   ================================== */
-
-@media (max-width: 768px) {
-    #zone-content {
-        padding: 60px 20px;
-    }
-    
-    #zone-content > div {
-        padding: 25px;
-        margin-bottom: 20px;
-    }
-    
-    #zone-content h1 {
-        font-size: 2em;
-    }
-    
-    #zone-content h2 {
-        font-size: 1.6em;
-    }
-    
-    #zone-content img {
-        max-height: 300px;
-    }
-    
-    .back-to-cube-btn {
-        top: 10px;
-        left: 10px;
-        font-size: 0.85em;
-        padding: 10px 18px;
-    }
 }
 
 /* ==================================
@@ -337,12 +318,8 @@
 }
 
 @keyframes fadeInOverlay {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes fadeInContent {
@@ -354,4 +331,84 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ==================================
+   RESPONSIVE
+   ================================== */
+
+@media (max-width: 768px) {
+    #zone-view #zone-content {
+        padding: 60px 20px;
+    }
+    
+    #zone-view .zone-container {
+        padding: 30px 20px;
+    }
+    
+    #zone-view .zone-container h1 {
+        font-size: 2em;
+    }
+    
+    #zone-view .zone-container h2 {
+        font-size: 1.5em;
+    }
+    
+    #zone-view .zone-container p {
+        font-size: 1em;
+    }
+    
+    #zone-view .zone-container img {
+        max-height: 300px;
+    }
+    
+    #zone-view .back-to-cube-btn {
+        top: 10px;
+        left: 10px;
+        font-size: 0.85em;
+        padding: 10px 18px;
+    }
+}
+
+/* ==================================
+   ESTILOS ADICIONALES PARA CASOS ESPECIALES
+   ================================== */
+
+/* Divs con estilos inline especiales (como el Mar de Estrellas) */
+#zone-view .zone-container > div[style*="background"] {
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 15px;
+}
+
+/* Asegurar que las imágenes dentro de divs especiales se vean bien */
+#zone-view .zone-container > div img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Listas dentro del contenido */
+#zone-view .zone-container ul,
+#zone-view .zone-container ol {
+    margin: 20px 0;
+    padding-left: 30px;
+}
+
+#zone-view .zone-container li {
+    margin: 10px 0;
+    line-height: 1.7;
+}
+
+/* Enlaces */
+#zone-view .zone-container a {
+    color: #56C1D3;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+#zone-view .zone-container a:hover {
+    color: #9C8BA7;
 }
