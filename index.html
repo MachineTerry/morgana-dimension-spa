@@ -250,17 +250,64 @@
          SCRIPTS EN ORDEN CORRECTO
          ======================================== -->
     
-    <!-- 1. Función de música (debe estar ANTES de que se use) -->
-    <script>
-    function toggleMusic() {
-        console.log('🎵 Toggle music clicked');
-        const btn = document.getElementById('musicBtn');
-        if (btn) {
-            btn.textContent = btn.textContent === '🔇' ? '🔊' : '🔇';
-        }
-        // Aquí puedes agregar lógica de música más adelante
+    <!-- ========================================
+     SCRIPT DE MÚSICA - Agregar antes de importmap
+     ======================================== -->
+<script>
+// Variables globales para la música
+let audioElement = null;
+let isMusicPlaying = false;
+
+// Función de música
+function toggleMusic() {
+    const btn = document.getElementById('musicBtn');
+    
+    // Crear elemento de audio si no existe
+    if (!audioElement) {
+        audioElement = document.createElement('audio');
+        audioElement.loop = true;
+        audioElement.volume = 0.8;
+        
+        const source = document.createElement('source');
+        source.src = 'daniel.mp3';  // Asegúrate que este archivo existe en tu carpeta raíz
+        source.type = 'audio/mpeg';
+        audioElement.appendChild(source);
+        document.body.appendChild(audioElement);
+        
+        console.log('🎵 Audio element creado');
     }
-    </script>
+    
+    // Toggle play/pause
+    if (isMusicPlaying) {
+        audioElement.pause();
+        btn.textContent = '🔇';
+        isMusicPlaying = false;
+        console.log('🔇 Música pausada');
+    } else {
+        audioElement.play()
+            .then(() => {
+                btn.textContent = '🔊';
+                isMusicPlaying = true;
+                console.log('🔊 Música reproduciéndose');
+            })
+            .catch(err => {
+                console.error('❌ Error reproduciendo música:', err);
+                alert('No se pudo reproducir la música. Verifica que el archivo daniel.mp3 existe.');
+            });
+    }
+}
+
+// Auto-iniciar música cuando se carga la página (opcional)
+// Descomenta estas líneas si quieres que empiece automáticamente:
+window.addEventListener('load', () => {
+    // Esperar interacción del usuario (requerido por navegadores)
+    document.body.addEventListener('click', () => {
+        if (!isMusicPlaying && audioElement) {
+            toggleMusic();
+        }
+    }, { once: true });
+});
+</script>
 
     <!-- 2. Import map para Three.js -->
     <script type="importmap">
