@@ -1,7 +1,6 @@
 /* ==================================
-   STYLES ENHANCED - VERSIÓN FINAL
-   Este archivo SOBRESCRIBE algunos estilos de styles.css
-   para las vistas de zonas con imágenes de fondo
+   STYLES ENHANCED - VERSIÓN LEGIBLE
+   Ajustado para máxima legibilidad sin cajas
    ================================== */
 
 /* ===== VISTA DE ZONAS (SISTEMA COMPLETO) ===== */
@@ -35,7 +34,7 @@
 }
 
 /* ==================================
-   OVERLAYS POR ZONA - TRANSPARENTES
+   OVERLAYS MÁS OSCUROS PARA LEGIBILIDAD
    ================================== */
 
 .zone-overlay {
@@ -45,65 +44,64 @@
     width: 100%;
     height: 100%;
     z-index: -1;
+    backdrop-filter: blur(2px);
+}
+
+/* Zona 0 - Ciudad (más oscuro) */
+#zone-view[data-zone="0"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(61, 79, 58, 0.60) 100%);
+}
+
+/* Zona 1 - Residencial (más oscuro) */
+#zone-view[data-zone="1"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.70) 0%, 
+        rgba(20, 100, 100, 0.65) 100%);
+}
+
+/* Zona 2 - Antinatura (más oscuro) */
+#zone-view[data-zone="2"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.75) 0%, 
+        rgba(75, 0, 130, 0.70) 100%);
+}
+
+/* Zona 3 - Protegida (mantener claro pero más legible) */
+#zone-view[data-zone="3"] .zone-overlay {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 220, 0.50) 0%,
+        rgba(255, 235, 150, 0.50) 100%);
     backdrop-filter: blur(1px);
 }
 
-/* Zona 0 - Ciudad */
-#zone-view[data-zone="0"] .zone-overlay {
-    background: linear-gradient(135deg, 
-        rgba(61, 79, 58, 0.40) 0%,
-        rgba(107, 122, 104, 0.40) 100%);
-}
-
-/* Zona 1 - Residencial */
-#zone-view[data-zone="1"] .zone-overlay {
-    background: linear-gradient(135deg, 
-        rgba(20, 100, 100, 0.50) 0%, 
-        rgba(59, 153, 72, 0.50) 100%);
-}
-
-/* Zona 2 - Antinatura */
-#zone-view[data-zone="2"] .zone-overlay {
-    background: linear-gradient(135deg, 
-        rgba(75, 0, 130, 0.65) 0%, 
-        rgba(139, 0, 139, 0.65) 100%);
-}
-
-/* Zona 3 - Protegida (ESPECIAL - texto oscuro) */
-#zone-view[data-zone="3"] .zone-overlay {
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 220, 0.30) 0%,
-        rgba(255, 235, 150, 0.30) 100%);
-    backdrop-filter: blur(0.5px);
-}
-
-/* Zona 4 - Infraestructura */
+/* Zona 4 - Infraestructura (más oscuro) */
 #zone-view[data-zone="4"] .zone-overlay {
     background: linear-gradient(135deg, 
-        rgba(38, 67, 82, 0.45) 0%, 
-        rgba(136, 194, 204, 0.45) 100%);
+        rgba(0, 0, 0, 0.68) 0%, 
+        rgba(38, 67, 82, 0.65) 100%);
 }
 
-/* Zona 5 - Frontera */
+/* Zona 5 - Frontera (más oscuro) */
 #zone-view[data-zone="5"] .zone-overlay {
     background: linear-gradient(135deg, 
-        rgba(13, 27, 42, 0.55) 0%, 
-        rgba(75, 0, 80, 0.55) 100%);
+        rgba(0, 0, 0, 0.75) 0%, 
+        rgba(13, 27, 42, 0.70) 100%);
 }
 
-/* Tártaro */
+/* Tártaro (muy oscuro) */
 #zone-view[data-zone="tartaro"] .zone-overlay {
     background: linear-gradient(135deg, 
-        rgba(13, 27, 42, 0.70) 0%, 
-        rgba(10, 10, 12, 0.70) 100%);
-    backdrop-filter: blur(1.5px);
+        rgba(0, 0, 0, 0.80) 0%, 
+        rgba(10, 10, 12, 0.80) 100%);
+    backdrop-filter: blur(2px);
 }
 
 /* ==================================
-   CONTENEDOR DE ZONA
+   CONTENEDOR SIN CAJA - ESTILO REPORTE
    ================================== */
 
-/* Sobrescribir el #zone-content del styles.css */
 #zone-view #zone-content {
     position: relative;
     max-width: 1000px;
@@ -112,66 +110,91 @@
     min-height: 100vh;
 }
 
-/* Contenedor principal CON fondo semi-transparente */
+/* SIN caja contenedora - solo elementos flotantes */
 #zone-view .zone-container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 50px 40px;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 0; /* Sin padding */
+    background: transparent; /* Sin fondo */
+    backdrop-filter: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
     line-height: 1.8;
 }
 
 /* ==================================
-   ELEMENTOS DE TEXTO
+   ELEMENTOS DE TEXTO - SOMBRAS FUERTES
    ================================== */
 
 #zone-view .zone-container h1 {
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5em;
+    margin-bottom: 40px;
+    padding: 20px 0;
+    font-size: 2.8em;
     font-weight: 300;
-    letter-spacing: 2px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 1),
-                 0 0 40px rgba(0, 0, 0, 0.8);
+    letter-spacing: 3px;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    /* SOMBRAS MÚLTIPLES PARA MÁXIMA LEGIBILIDAD */
+    text-shadow: 
+        0 0 20px rgba(0, 0, 0, 1),
+        0 0 40px rgba(0, 0, 0, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 1),
+        -2px -2px 4px rgba(0, 0, 0, 1),
+        2px -2px 4px rgba(0, 0, 0, 1),
+        -2px 2px 4px rgba(0, 0, 0, 1);
 }
 
 #zone-view .zone-container h2 {
-    font-size: 1.8em;
-    margin: 30px 0 15px 0;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-shadow: 0 3px 15px rgba(0, 0, 0, 1),
-                 0 0 30px rgba(0, 0, 0, 0.9);
+    font-size: 2em;
+    margin: 40px 0 20px 0;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #ffffff;
+    background: transparent;
+    text-shadow: 
+        0 0 15px rgba(0, 0, 0, 1),
+        0 0 30px rgba(0, 0, 0, 0.9),
+        2px 2px 3px rgba(0, 0, 0, 1),
+        -2px -2px 3px rgba(0, 0, 0, 1);
 }
 
 #zone-view .zone-container h3 {
-    font-size: 1.5em;
-    margin: 25px 0 15px 0;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 1);
+    font-size: 1.6em;
+    margin: 30px 0 15px 0;
+    color: #ffffff;
+    background: transparent;
+    text-shadow: 
+        0 0 12px rgba(0, 0, 0, 1),
+        2px 2px 3px rgba(0, 0, 0, 1),
+        -2px -2px 3px rgba(0, 0, 0, 1);
 }
 
 #zone-view .zone-container p {
-    line-height: 1.8;
+    line-height: 1.9;
     margin-bottom: 20px;
-    font-size: 1.1em;
+    font-size: 1.15em;
     text-align: justify;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 1),
-                 0 0 20px rgba(0, 0, 0, 0.8);
+    color: #f0f0f0;
+    background: transparent;
+    /* Sombra fuerte pero suave */
+    text-shadow: 
+        0 0 10px rgba(0, 0, 0, 1),
+        1px 1px 3px rgba(0, 0, 0, 1),
+        -1px -1px 3px rgba(0, 0, 0, 1);
 }
 
 #zone-view .zone-container em {
     font-style: italic;
     font-weight: 600;
+    color: #ffffff;
 }
 
 #zone-view .zone-container strong {
     font-weight: 700;
+    color: #ffffff;
 }
 
 /* ==================================
@@ -185,29 +208,30 @@
     border-radius: 10px;
     display: block;
     object-fit: cover;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-    border: 3px solid rgba(255, 255, 255, 0.15);
+    margin: 30px 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+    border: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 /* ==================================
-   INFO BOXES
+   INFO BOXES - MANTENER EN LA PARTE DE ABAJO
    ================================== */
 
 #zone-view .info-box {
-    padding: 25px;
-    margin: 30px 0;
+    padding: 30px;
+    margin: 40px 0;
     border-radius: 12px;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.90);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 #zone-view .info-box p {
-    margin-bottom: 12px;
-    font-size: 1em;
+    margin-bottom: 15px;
+    font-size: 1.05em;
     text-align: left;
+    color: #f0f0f0;
 }
 
 #zone-view .info-box p:last-child {
@@ -216,39 +240,39 @@
 
 #zone-view .info-box strong {
     font-weight: 700;
+    color: #56C1D3;
 }
 
 /* ==================================
-   ZONA PROTEGIDA - ESTILOS ESPECIALES
+   ZONA PROTEGIDA - TEXTO OSCURO
    ================================== */
 
-/* Contenedor con fondo claro */
-#zone-view[data-zone="3"] .zone-container {
-    background: rgba(255, 255, 230, 0.90);
-    border: 2px solid rgba(255, 215, 0, 0.3);
-}
-
-/* Títulos oscuros */
 #zone-view[data-zone="3"] .zone-container h1,
 #zone-view[data-zone="3"] .zone-container h2,
 #zone-view[data-zone="3"] .zone-container h3 {
-    color: #2a2a2a;
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
+    color: #1a1a1a;
+    text-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.8),
+        0 0 30px rgba(255, 255, 255, 0.6),
+        2px 2px 4px rgba(255, 255, 255, 0.7),
+        -2px -2px 4px rgba(255, 255, 255, 0.7);
 }
 
-/* Texto oscuro */
 #zone-view[data-zone="3"] .zone-container p,
 #zone-view[data-zone="3"] .zone-container li,
 #zone-view[data-zone="3"] .zone-container em,
 #zone-view[data-zone="3"] .zone-container strong {
-    color: #1a1a1a;
-    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
+    color: #000000;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        1px 1px 3px rgba(255, 255, 255, 0.7),
+        -1px -1px 3px rgba(255, 255, 255, 0.7);
 }
 
-/* Info box clara */
+/* Info box más clara */
 #zone-view[data-zone="3"] .info-box {
-    background: rgba(255, 255, 200, 0.85);
-    border: 2px solid rgba(255, 215, 0, 0.4);
+    background: rgba(255, 255, 200, 0.90);
+    border: 2px solid rgba(200, 180, 0, 0.5);
 }
 
 #zone-view[data-zone="3"] .info-box p,
@@ -268,9 +292,9 @@
     width: fit-content;
     margin: 0;
     padding: 12px 25px;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.90);
     backdrop-filter: blur(15px);
-    border: 2px solid rgba(156, 139, 167, 0.5);
+    border: 2px solid rgba(156, 139, 167, 0.6);
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -278,16 +302,16 @@
     cursor: pointer;
     transition: all 0.3s;
     z-index: 1000;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     font-family: 'Georgia', 'Times New Roman', serif;
     font-size: 1em;
 }
 
 #zone-view .back-to-cube-btn:hover {
-    background: rgba(156, 139, 167, 0.4);
-    border-color: rgba(156, 139, 167, 0.8);
+    background: rgba(156, 139, 167, 0.5);
+    border-color: rgba(156, 139, 167, 0.9);
     transform: translateX(-5px);
-    box-shadow: 0 6px 25px rgba(156, 139, 167, 0.5);
+    box-shadow: 0 6px 25px rgba(156, 139, 167, 0.6);
 }
 
 /* ==================================
@@ -342,20 +366,16 @@
         padding: 60px 20px;
     }
     
-    #zone-view .zone-container {
-        padding: 30px 20px;
-    }
-    
     #zone-view .zone-container h1 {
-        font-size: 2em;
+        font-size: 2.2em;
     }
     
     #zone-view .zone-container h2 {
-        font-size: 1.5em;
+        font-size: 1.7em;
     }
     
     #zone-view .zone-container p {
-        font-size: 1em;
+        font-size: 1.05em;
     }
     
     #zone-view .zone-container img {
@@ -371,17 +391,18 @@
 }
 
 /* ==================================
-   ESTILOS ADICIONALES PARA CASOS ESPECIALES
+   ESTILOS PARA DIVS ESPECIALES
    ================================== */
 
-/* Divs con estilos inline especiales (como el Mar de Estrellas) */
+/* Divs con estilos inline (como Mar de Estrellas) */
 #zone-view .zone-container > div[style*="background"] {
-    padding: 25px;
-    margin: 30px 0;
+    padding: 30px;
+    margin: 40px 0;
     border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
 }
 
-/* Asegurar que las imágenes dentro de divs especiales se vean bien */
+/* Imágenes dentro de divs especiales */
 #zone-view .zone-container > div img {
     width: 100%;
     max-height: 400px;
@@ -390,7 +411,7 @@
     margin: 20px 0;
 }
 
-/* Listas dentro del contenido */
+/* Listas */
 #zone-view .zone-container ul,
 #zone-view .zone-container ol {
     margin: 20px 0;
@@ -400,6 +421,7 @@
 #zone-view .zone-container li {
     margin: 10px 0;
     line-height: 1.7;
+    color: #f0f0f0;
 }
 
 /* Enlaces */
@@ -407,6 +429,7 @@
     color: #56C1D3;
     text-decoration: underline;
     transition: color 0.3s;
+    font-weight: 600;
 }
 
 #zone-view .zone-container a:hover {
