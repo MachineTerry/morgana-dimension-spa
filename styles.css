@@ -561,7 +561,7 @@ header h1 {
     position: relative;
     min-height: 100vh;
     /* Fondo con imagen de Morgana */
-    background-image: url('img/morgana-main.webp');
+    background-image: url('img/morgana.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
