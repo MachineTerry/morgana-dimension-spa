@@ -241,10 +241,15 @@
         </div>
     </div>
 
-    <!-- Vista de Zonas (oculta inicialmente) -->
-    <div id="zone-view" style="display: none;">
-        <!-- El contenido se genera dinámicamente -->
+    <div id="zone-view" data-zone="2" class="zone-active">
+    <div class="zone-background" style="background-image: url('img/antinatura.jpg');"></div>
+    <div class="zone-overlay"></div>
+    <div id="zone-content">
+        <!-- Contenido de la zona -->
     </div>
+    <button class="back-to-cube-btn">Volver al Cubo</button>
+</div>
+
 
         <script type="importmap">
     {
