@@ -5,7 +5,7 @@ const zoneBackgrounds = {
     2: 'img/antinatura.jpg',
     3: 'img/zonaprotegida.jpg',
     4: 'img/edificio.webp',
-    5: 'img/morgana.jpg',  // Usando la versión .jpg de mejor calidad
+    5: 'img/tartaro.jpg',
     tartaro: 'img/tartaro-abismo.webp'
 };
 
@@ -13,7 +13,6 @@ const zoneBackgrounds = {
 window.loadZone = function(zoneIndex) {
     const cubeView = document.getElementById('cube-view');
     const zoneView = document.getElementById('zone-view');
-    const zoneContent = document.getElementById('zone-content');
     
     // Obtener datos de la zona
     const zone = zonesData[zoneIndex];
@@ -21,6 +20,8 @@ window.loadZone = function(zoneIndex) {
         console.error('Zona no encontrada:', zoneIndex);
         return;
     }
+    
+    console.log('Cargando zona:', zoneIndex, zone.name);
     
     // Limpiar vista de zona
     zoneView.innerHTML = '';
@@ -48,19 +49,70 @@ window.loadZone = function(zoneIndex) {
     // Crear botón de regreso
     const backButton = document.createElement('button');
     backButton.className = 'back-to-cube-btn';
-    backButton.innerHTML = '← Volver al Hipercubo de Morgana';
+    backButton.innerHTML = '← Volver al Hipercubo';
     backButton.onclick = backToCube;
     zoneView.appendChild(backButton);
     
-    // Aplicar estilos de la zona al contenedor
-    content.style.background = zone.containerBg;
-    content.style.borderColor = zone.borderColor;
-    content.style.color = zone.textColor;
-    
     // Transición suave
-    cubeView.classList.add('hidden');
     cubeView.style.display = 'none';
     zoneView.style.display = 'block';
+    
+    // Trigger animations
+    setTimeout(() => {
+        zoneView.classList.add('active');
+    }, 50);
+    
+    // Scroll al inicio
+    window.scrollTo(0, 0);
+};
+
+// Función para volver al cubo
+function backToCube() {
+    const cubeView = document.getElementById('cube-view');
+    const zoneView = document.getElementById('zone-view');
+    
+    console.log('Volviendo al cubo...');
+    
+    // Remover clase active
+    zoneView.classList.remove('active');
+    
+    // Esperar animación y cambiar
+    setTimeout(() => {
+        zoneView.style.display = 'none';
+        cubeView.style.display = 'block';
+        
+        // Scroll al inicio
+        window.scrollTo(0, 0);
+    }, 300);
+}
+
+// Función para precargar imágenes de fondo
+function preloadBackgrounds() {
+    console.log('Precargando imágenes de fondo...');
+    Object.values(zoneBackgrounds).forEach(imagePath => {
+        const img = new Image();
+        img.src = imagePath;
+        img.onload = () => console.log('Imagen cargada:', imagePath);
+        img.onerror = () => console.error('Error cargando imagen:', imagePath);
+    });
+}
+
+// Precargar imágenes al cargar la página
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', preloadBackgrounds);
+} else {
+    preloadBackgrounds();
+}
+
+// Exportar funciones
+window.backToCube = backToCube;
+
+// Debug: Verificar que las funciones están disponibles
+console.log('Navigation enhanced cargado. Funciones disponibles:', {
+    loadZone: typeof window.loadZone,
+    backToCube: typeof window.backToCube,
+    zonesData: typeof zonesData
+});    zoneView.style.display = 'block';
     
     // Trigger animations
     setTimeout(() => {
