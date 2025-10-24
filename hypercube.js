@@ -11,6 +11,10 @@ let trapezoidMeshes = [];
 let longPressTimer = null;
 let longPressStarted = false;
 let selectedZoneFace = null; // 👈 NUEVA VARIABLE: rastrea la zona seleccionada
+// AGREGAR:
+let lastTapTime = 0;
+let lastTappedFace = null;
+const DOUBLE_TAP_DELAY = 500;
 
 // Configuración de zonas con colores específicos
 const zones = {
@@ -466,17 +470,17 @@ function onMouseMove(event) {
 function onHypercubeClick(event) {
     const isTouch = event.type === 'touchend';
     
-    if (isTouch && longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-        
-        if (longPressStarted) {
-            longPressStarted = false;
-            return;
-        }
-    }
-    
     if (isTouch) {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+            
+            if (longPressStarted) {
+                longPressStarted = false;
+                return;
+            }
+        }
+        
         if (event.changedTouches.length === 0) return;
         const touch = event.changedTouches[0];
         const rect = renderer.domElement.getBoundingClientRect();
@@ -495,15 +499,89 @@ function onHypercubeClick(event) {
         if (intersects.length > 0) {
             const object = intersects[0].object;
             if (object.userData.isTrapezoid) {
-                // Seleccionar zona
-                selectZone(object);
+                handleTouchTap(object); // NUEVA FUNCIÓN
             }
         }
     } else {
-        // 👇 DESKTOP CLICK: SOLO SELECCIONAR
+        // Desktop
         if (hoveredFace && hoveredFace.userData.isTrapezoid) {
             selectZone(hoveredFace);
         }
+    }
+}
+
+function handleTouchTap(object) {
+    const currentTime = Date.now();
+    const timeSinceLastTap = currentTime - lastTapTime;
+    
+    if (lastTappedFace === object && timeSinceLastTap < DOUBLE_TAP_DELAY) {
+        // DOBLE TAP: Entrar
+        console.log('🎯 Doble tap - Entrando a zona:', object.userData.zoneIndex);
+        
+        object.material.emissiveIntensity = 1.0;
+        setTimeout(() => {
+            if (window.loadZone && typeof window.loadZone === 'function') {
+                window.loadZone(object.userData.zoneIndex);
+            }
+        }, 200);
+        
+        lastTapTime = 0;
+        lastTappedFace = null;
+        
+    } else {
+        // PRIMER TAP: Seleccionar
+        console.log('👆 Primer tap - Seleccionando:', object.userData.zoneIndex);
+        selectZone(object);
+        
+        lastTapTime = currentTime;
+        lastTappedFace = object;
+        
+        showDoubleTapHint();
+    }
+}
+
+function showDoubleTapHint() {
+    if (window.innerWidth <= 768) {
+        let hint = document.getElementById('double-tap-hint');
+        
+        if (!hint) {
+            hint = document.createElement('div');
+            hint.id = 'double-tap-hint';
+            hint.style.cssText = `
+                position: fixed;
+                bottom: 120px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(156, 139, 167, 0.95);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 25px;
+                font-size: 14px;
+                font-weight: 600;
+                z-index: 1000;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+                pointer-events: none;
+                animation: fadeInOut 2s ease;
+            `;
+            hint.textContent = '👆 Toca dos veces para entrar';
+            document.body.appendChild(hint);
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+                    20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        hint.style.display = 'block';
+        setTimeout(() => {
+            if (hint) hint.style.display = 'none';
+        }, 2000);
     }
 }
 
@@ -597,11 +675,14 @@ function showRoomPanel(zone, zoneIndex) {
         panel.id = 'selected-room-panel';
         panel.className = 'selected-room';
         panel.innerHTML = `
-            <button id="close-room-panel" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: #BFC7C9; font-size: 20px; cursor: pointer; padding: 5px;">✕</button>
-            <h3>📍 Zona Seleccionada</h3>
-            <p id="room-name"></p>
-            <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">Presiona <strong>Enter</strong> o <strong>Espacio</strong> para entrar</p>
-        `;
+    <button id="close-room-panel" style="...">✕</button>
+    <h3>📍 Zona Seleccionada</h3>
+    <p id="room-name"></p>
+    <p style="color: #FF6666; font-size: 0.9em; margin-top: 10px;">
+        💻 Desktop: Presiona <strong>Enter</strong> o <strong>Espacio</strong><br>
+        📱 Móvil: <strong>Toca dos veces</strong> para entrar
+    </p>
+`;
         document.getElementById('cube-view').appendChild(panel);
         
         document.getElementById('close-room-panel').addEventListener('click', (e) => {
