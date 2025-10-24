@@ -68,7 +68,7 @@ const zoneBackgrounds = {
     2: 'img/antinatura.jpg',
     3: 'img/zonaprotegida.jpg',
     4: 'img/edificio.webp',
-    5: 'img/morgana.webp',
+    5: 'img/morgana.jpg',
     tartaro: 'img/tartaro-abismo.webp'
 };
 
