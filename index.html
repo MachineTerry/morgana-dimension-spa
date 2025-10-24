@@ -29,15 +29,31 @@
                 <p class="intro">Un espacio entre dimensiones donde la realidad se fragmenta y lo imposible toma forma.</p>
             </header>
 
-            <!-- HIPERCUBO INTERACTIVO -->
-            <div class="cube-section">
-                <h2>Explora el Hipercubo</h2>
-                <p class="cube-instruction">Interactúa con las caras trapezoidales para descubrir las 6 zonas.</p>
-                
-                      <p>Presiona enter o space para acceder • Presiona G sobre el cubo central para acceder al Tártaro</p>
-                
-                <div id="canvas-container"></div>
-            </div>
+           <!-- HIPERCUBO INTERACTIVO -->
+<div class="cube-section">
+    <h2>Explora el Hipercubo</h2>
+    <p class="cube-instruction">Interactúa con las caras trapezoidales para descubrir las 6 zonas.</p>
+    
+    <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; margin: 20px 0;">
+        <!-- Desktop -->
+        <p style="margin-bottom: 12px;">
+            <strong style="color: #56C1D3;">💻 Desktop:</strong><br>
+            • Click para seleccionar zona<br>
+            • <kbd style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px;">Enter</kbd> o <kbd style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px;">Espacio</kbd> para entrar<br>
+            • Presiona <kbd style="background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px;">G</kbd> sobre el cubo central para el Tártaro
+        </p>
+        
+        <!-- Móvil -->
+        <p style="margin-bottom: 0;">
+            <strong style="color: #9C8BA7;">📱 Móvil:</strong><br>
+            • <strong>1 tap</strong> para seleccionar zona<br>
+            • <strong>Doble tap</strong> para entrar<br>
+            • <strong>Mantén presionado 1.5s</strong> sobre el cubo central para el Tártaro
+        </p>
+    </div>
+    
+    <div id="canvas-container"></div>
+</div>
 
             <!-- SOBRE LA DIMENSIÓN -->
             <div class="about-section">
