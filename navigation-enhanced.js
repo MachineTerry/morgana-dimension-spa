@@ -8,7 +8,7 @@ const zoneBackgrounds = {
     1: 'img/residencial.webp',        // Residencial
     2: 'img/antinatura.jpg',          // Antinatura
     3: 'img/zonaprotegida.jpg',       // Zona Protegida
-    4: 'img/edificio.jpg',           // Infraestructura
+    4: 'img/edificio.webp',           // Infraestructura
     5: 'img/morgana.jpg',             // Frontera del Tártaro
     tartaro: 'img/tartaro-abismo.webp' // El Tártaro - Abismo
 };
