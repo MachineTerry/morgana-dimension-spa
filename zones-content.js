@@ -185,7 +185,7 @@ const zonesData = {
     
     5: {
         name: 'Frontera del Tártaro',
-        image: 'img/morgana.jpg',
+        image: 'img/morgana.webp',
         background: 'linear-gradient(135deg, #8B0A50 0%, #4B0026 100%)',
         containerBg: 'rgba(75, 0, 38, 0.95)',
         borderColor: 'rgba(139, 10, 80, 0.4)',
