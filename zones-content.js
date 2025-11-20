@@ -246,7 +246,7 @@ const zonesData = {
             <p>El abismo se divide en pisos, con escaleras que descienden en espiral como caracol hacia las profundidades. Las dimensiones de Morgana se consideran la primera planta de este lugar: la interlínea entre el mundo terrenal y el vacío.</p>
             
             <h2>Los Espectros</h2>
-            <p>Los únicos atisbos de "vida" son los espectros de enorme poder y rango. Seres irracionales que devoran lo que se cruza en su camino. No son entidades en el sentido tradicional: son fragmentos de anti-existencia que se han vuelto conscientes.</p>
+            <p>Los únicos atisbos de "vida" son los espectros de enorme poder y rango. Seres irracionales que devoran lo que se cruza en su camino.</p>
             
             <h2>Escape Imposible</h2>
             <p>La única manera de salir es teniendo un iris dimensional o un poder mental colosal. Todos los que han escapado comparten una peculiaridad: heredan la energía de la Maga Morgana. Es como si el abismo marcara a aquellos que logran desafiarlo.</p>
@@ -276,7 +276,7 @@ const zonesData = {
             <div class="info-box">
                 <p><strong>Clasificación:</strong> NÚCLEO DIMENSIONAL / ANTI-EXISTENCIA</p>
                 <p><strong>Localización:</strong> Centro absoluto del Hipercubo</p>
-                <p><strong>Peligro:</strong> ABSOLUTO (desintegración conceptual)</p>
+                <p><strong>Peligro:</strong> MUY ALTO</p>
                 <p><strong>Distorsión temporal:</strong> 10:1 (10 años aquí = 100 años exterior)</p>
                 <p><strong>Entidades:</strong> Espectros de alto rango</p>
                 <p><strong>Escape:</strong> Solo mediante iris dimensional o poder mental extremo</p>
